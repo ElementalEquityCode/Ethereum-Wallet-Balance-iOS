@@ -11,6 +11,12 @@ class AddressSearchTextField: UITextField {
     
     // MARK: - Properties
     
+    let activateCameraBarButtonItem: UIBarButtonItem = {
+        let barButtonItem = UIBarButtonItem(image: UIImage(named: "camera.fill"), style: .plain, target: nil, action: nil)
+        barButtonItem.tintColor = .primaryColor
+        return barButtonItem
+    }()
+    
     override func textRect(forBounds bounds: CGRect) -> CGRect {
         return bounds.insetBy(dx: 40, dy: 16)
     }
@@ -25,6 +31,8 @@ class AddressSearchTextField: UITextField {
         super.init(frame: CGRect.zero)
         
         setupTextField()
+        setupToolBar()
+        setupTargets()
     }
     
     required init?(coder: NSCoder) {
@@ -33,6 +41,7 @@ class AddressSearchTextField: UITextField {
     
     private func setupTextField() {
         attributedPlaceholder = NSAttributedString(string: "Enter an Ethereum Address", attributes: [NSAttributedString.Key.foregroundColor: UIColor.placeholderTextColor])
+        smartInsertDeleteType = .no
         
         translatesAutoresizingMaskIntoConstraints = false
         heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.075).isActive = true
@@ -54,6 +63,27 @@ class AddressSearchTextField: UITextField {
         
         leftView = leftViewContainerView
         leftViewMode = .always
+
+        autocorrectionType = .no
+        autocapitalizationType = .none
+    }
+    
+    private func setupToolBar() {
+        let toolBar = UIToolbar()
+        inputAccessoryView = toolBar
+        toolBar.sizeToFit()
+        
+        toolBar.items = [activateCameraBarButtonItem]
+    }
+    
+    private func setupTargets() {
+        addTarget(self, action: #selector(performImpactFeedbackGenerator), for: .editingDidBegin)
+    }
+    
+    // MARK: - Targets
+    
+    @objc private func performImpactFeedbackGenerator() {
+        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
     }
     
 }
