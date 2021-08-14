@@ -6,11 +6,13 @@
 //
 
 import UIKit
-import AVKit
+import AVFoundation
 
-class ScanAddressQRCodeController: UIViewController {
+class ScanAddressQRCodeController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     
     // MARK: - Properties
+    
+    weak var delegate: AddressQRCodeScanDelegate?
     
     private let captureSession = AVCaptureSession()
     
@@ -35,6 +37,9 @@ class ScanAddressQRCodeController: UIViewController {
     private func requestAuthorizationForCamera() {
         if AVCaptureDevice.authorizationStatus(for: .video) != .authorized {
             AVCaptureDevice.requestAccess(for: .video) { (granted) in
+                
+                print("Permission stauts: \(granted)")
+                
                 if granted {
                     self.setupCaptureSession()
                 } else {
@@ -64,6 +69,14 @@ class ScanAddressQRCodeController: UIViewController {
             presentAlertViewController(with: "Error", message: error.localizedDescription)
         }
         
+        let output = AVCaptureMetadataOutput()
+        
+        if captureSession.canAddOutput(output) {
+            captureSession.addOutput(output)
+            output.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
+            output.metadataObjectTypes = [.qr]
+        }
+        
         captureSession.commitConfiguration()
         
         captureSession.startRunning()
@@ -77,6 +90,23 @@ class ScanAddressQRCodeController: UIViewController {
     
     private func setupNavigationBar() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "chevron.backward"), style: .plain, target: self, action: #selector(dismissThisViewController))
+    }
+    
+    // MARK: - AVCaptureMetadataOutputObjectsDelegate
+    
+    func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
+        
+        captureSession.stopRunning()
+        
+        if let metadataObjects = metadataObjects.first {
+            if let readableObject = metadataObjects as? AVMetadataMachineReadableCodeObject {
+                if let address = readableObject.stringValue {
+                    delegate?.didScanQRCode(value: address)
+                    dismissThisViewController()
+                }
+            }
+        }
+        
     }
     
     // MARK: - Selectors

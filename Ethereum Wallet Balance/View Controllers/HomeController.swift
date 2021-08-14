@@ -7,7 +7,7 @@
 
 import UIKit
 
-class HomeController: UIViewController, UITextFieldDelegate {
+class HomeController: UIViewController, UITextFieldDelegate, AddressQRCodeScanDelegate {
     
     // MARK: - Properties
     
@@ -92,9 +92,16 @@ class HomeController: UIViewController, UITextFieldDelegate {
         UIImpactFeedbackGenerator(style: .medium).impactOccurred()
         
         let scanAddressQRCodeController = ScanAddressQRCodeController()
+        scanAddressQRCodeController.delegate = self
         let navigationController = UINavigationController(rootViewController: scanAddressQRCodeController)
         navigationController.modalPresentationStyle = .fullScreen
         present(navigationController, animated: true)
+    }
+    
+    // MARK: - AddressQRCodeScanDelegate
+    
+    func didScanQRCode(value: String) {
+        addressSearchTextField.text = value
     }
     
     // MARK: - Helpers

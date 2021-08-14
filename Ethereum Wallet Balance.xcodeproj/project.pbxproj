@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1E57833B26C81FB900B0B80C /* AddressQRCodeScanDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E57833A26C81FB900B0B80C /* AddressQRCodeScanDelegate.swift */; };
 		1E6B4E8B26C5D7420077F66D /* AddressSearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E6B4E8A26C5D7420077F66D /* AddressSearchTextField.swift */; };
 		1E6B4E8E26C5D8070077F66D /* UIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E6B4E8D26C5D8070077F66D /* UIStackView.swift */; };
 		1E6B4E9126C5D88B0077F66D /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E6B4E9026C5D88B0077F66D /* UIView.swift */; };
@@ -23,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1E57833A26C81FB900B0B80C /* AddressQRCodeScanDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressQRCodeScanDelegate.swift; sourceTree = "<group>"; };
 		1E6B4E8A26C5D7420077F66D /* AddressSearchTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressSearchTextField.swift; sourceTree = "<group>"; };
 		1E6B4E8D26C5D8070077F66D /* UIStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStackView.swift; sourceTree = "<group>"; };
 		1E6B4E9026C5D88B0077F66D /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
@@ -54,6 +56,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1E57833926C81F9E00B0B80C /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				1E57833A26C81FB900B0B80C /* AddressQRCodeScanDelegate.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
 		1E6B4E8926C5D7350077F66D /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -94,8 +104,9 @@
 				1E738BB926C5B94F00C1667E /* AppDelegate.swift */,
 				1E738BBB26C5B94F00C1667E /* SceneDelegate.swift */,
 				1E6B4E9426C5DC560077F66D /* Tools */,
-				1E6B4E8926C5D7350077F66D /* Views */,
+				1E57833926C81F9E00B0B80C /* Protocols */,
 				1EA82AEC26C5BA260057E0C9 /* Extensions */,
+				1E6B4E8926C5D7350077F66D /* Views */,
 				1EA82AEB26C5BA1B0057E0C9 /* View Controllers */,
 				1E738BC226C5B94F00C1667E /* Assets.xcassets */,
 				1E738BC426C5B94F00C1667E /* LaunchScreen.storyboard */,
@@ -264,6 +275,7 @@
 				1EA82AEE26C5BA340057E0C9 /* UIColor.swift in Sources */,
 				1E738BBA26C5B94F00C1667E /* AppDelegate.swift in Sources */,
 				1E7897AF26C7425F0028248F /* ScanAddressQRCodeController.swift in Sources */,
+				1E57833B26C81FB900B0B80C /* AddressQRCodeScanDelegate.swift in Sources */,
 				1E738BBC26C5B94F00C1667E /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
