@@ -7,13 +7,17 @@
 
 import UIKit
 
-class HomeController: UIViewController, UITextFieldDelegate, AddressQRCodeScanDelegate {
+class HomeController: UIViewController, UITextFieldDelegate, AddressQRCodeScanDelegate, CoinDelegate {
     
     // MARK: - Properties
     
-    private lazy var overallStackView = UIStackView.makeVerticalStackView(with: [addressSearchTextField, UIView()], distribution: .fill, spacing: 0)
+    private var coins = [Coin]()
+    
+    private lazy var overallStackView = UIStackView.makeVerticalStackView(with: [addressSearchTextField, activityIndicatorView, UIView()], distribution: .fill, spacing: 20)
     
     private let addressSearchTextField = AddressSearchTextField()
+    
+    private let activityIndicatorView =  UIActivityIndicatorView.makeActivityIndicatorView()
     
     // MARK: - Initialization
 
@@ -41,6 +45,13 @@ class HomeController: UIViewController, UITextFieldDelegate, AddressQRCodeScanDe
         addressSearchTextField.delegate = self
     }
     
+    // MARK: - CoinDelegate
+    
+    func didAddCoin(coin: Coin) {
+        print(coin.description)
+        coins.append(coin)
+    }
+    
     // MARK: - UITextFieldDelegate
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -61,7 +72,7 @@ class HomeController: UIViewController, UITextFieldDelegate, AddressQRCodeScanDe
     }
         
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        if textField.text!.count == 36 {
+        if textField.text!.count == 42 {
             textField.returnKeyType = .go
             textField.reloadInputViews()
         } else {
@@ -71,7 +82,7 @@ class HomeController: UIViewController, UITextFieldDelegate, AddressQRCodeScanDe
     }
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        if textField.text!.count == 36 {
+        if textField.text!.count == 42 {
             textField.returnKeyType = .go
             textField.reloadInputViews()
         } else {
@@ -82,6 +93,10 @@ class HomeController: UIViewController, UITextFieldDelegate, AddressQRCodeScanDe
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
+        
+        if textField.text!.count == 42 {
+            searchForAddress(with: textField.text!)
+        }
         
         return true
     }
@@ -98,10 +113,24 @@ class HomeController: UIViewController, UITextFieldDelegate, AddressQRCodeScanDe
         present(navigationController, animated: true)
     }
     
+    // MARK: - URLSessions
+    
+    func searchForAddress(with address: String) {
+        activityIndicatorView.startAnimating()
+        
+        SearchForAddressSession(address: address, delegate: self).getCoinBalances {
+            DispatchQueue.main.async {
+                self.activityIndicatorView.stopAnimating()
+            }
+        }
+    }
+    
     // MARK: - AddressQRCodeScanDelegate
     
     func didScanQRCode(value: String) {
         addressSearchTextField.text = value
+        
+        searchForAddress(with: value)
     }
     
     // MARK: - Helpers

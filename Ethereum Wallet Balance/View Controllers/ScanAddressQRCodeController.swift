@@ -37,9 +37,6 @@ class ScanAddressQRCodeController: UIViewController, AVCaptureMetadataOutputObje
     private func requestAuthorizationForCamera() {
         if AVCaptureDevice.authorizationStatus(for: .video) != .authorized {
             AVCaptureDevice.requestAccess(for: .video) { (granted) in
-                
-                print("Permission stauts: \(granted)")
-                
                 if granted {
                     self.setupCaptureSession()
                 } else {
@@ -57,6 +54,7 @@ class ScanAddressQRCodeController: UIViewController, AVCaptureMetadataOutputObje
     
     private func setupCaptureSession() {
         captureSession.beginConfiguration()
+        
         guard let cameraInput = AVCaptureDevice.default(for: .video) else { return }
         
         do {
@@ -89,6 +87,7 @@ class ScanAddressQRCodeController: UIViewController, AVCaptureMetadataOutputObje
     }
     
     private func setupNavigationBar() {
+        navigationItem.title = "Scan QR Code"
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "chevron.backward"), style: .plain, target: self, action: #selector(dismissThisViewController))
     }
     
