@@ -92,9 +92,9 @@ class HomeController: UIViewController, UITextFieldDelegate {
         UIImpactFeedbackGenerator(style: .medium).impactOccurred()
         
         let scanAddressQRCodeController = ScanAddressQRCodeController()
-        scanAddressQRCodeController.modalTransitionStyle = .crossDissolve
-        scanAddressQRCodeController.modalPresentationStyle = .fullScreen
-        present(scanAddressQRCodeController, animated: true)
+        let navigationController = UINavigationController(rootViewController: scanAddressQRCodeController)
+        navigationController.modalPresentationStyle = .fullScreen
+        present(navigationController, animated: true)
     }
     
     // MARK: - Helpers

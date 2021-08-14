@@ -6,17 +6,83 @@
 //
 
 import UIKit
+import AVKit
 
 class ScanAddressQRCodeController: UIViewController {
     
     // MARK: - Properties
+    
+    private let captureSession = AVCaptureSession()
+    
+    private lazy var videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
     
     // MARK: - Initialization
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .red
+        view.backgroundColor = .primaryBackgroundColor
+        setupNavigationBar()
+    }
+        
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        requestAuthorizationForCamera()
+        setupVideoPreviewLayer()
+    }
+    
+    private func requestAuthorizationForCamera() {
+        if AVCaptureDevice.authorizationStatus(for: .video) != .authorized {
+            AVCaptureDevice.requestAccess(for: .video) { (granted) in
+                if granted {
+                    self.setupCaptureSession()
+                } else {
+                    DispatchQueue.main.async {
+                        self.presentAlertViewController(with: "Error", message: "Access to the device's camera is required to scan an Ethereum address QR Code.") {
+                            self.dismissThisViewController()
+                        }
+                    }
+                }
+            }
+        } else if AVCaptureDevice.authorizationStatus(for: .video) == .authorized {
+            setupCaptureSession()
+        }
+    }
+    
+    private func setupCaptureSession() {
+        captureSession.beginConfiguration()
+        guard let cameraInput = AVCaptureDevice.default(for: .video) else { return }
+        
+        do {
+            let cameraInput = try AVCaptureDeviceInput(device: cameraInput)
+            
+            if captureSession.canAddInput(cameraInput) {
+                captureSession.addInput(cameraInput)
+            }
+        } catch let error {
+            presentAlertViewController(with: "Error", message: error.localizedDescription)
+        }
+        
+        captureSession.commitConfiguration()
+        
+        captureSession.startRunning()
+    }
+    
+    private func setupVideoPreviewLayer() {
+        videoPreviewLayer.frame = view.bounds
+        videoPreviewLayer.videoGravity = .resizeAspectFill
+        view.layer.addSublayer(videoPreviewLayer)
+    }
+    
+    private func setupNavigationBar() {
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "chevron.backward"), style: .plain, target: self, action: #selector(dismissThisViewController))
+    }
+    
+    // MARK: - Selectors
+    
+    @objc private func dismissThisViewController() {
+        dismiss(animated: true, completion: nil)
     }
     
 }
