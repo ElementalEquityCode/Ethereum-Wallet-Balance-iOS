@@ -16,6 +16,7 @@
 		1E738BBE26C5B94F00C1667E /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E738BBD26C5B94F00C1667E /* HomeController.swift */; };
 		1E738BC326C5B94F00C1667E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E738BC226C5B94F00C1667E /* Assets.xcassets */; };
 		1E738BC626C5B94F00C1667E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1E738BC426C5B94F00C1667E /* LaunchScreen.storyboard */; };
+		1E7897AF26C7425F0028248F /* ScanAddressQRCodeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7897AE26C7425F0028248F /* ScanAddressQRCodeController.swift */; };
 		1EA82AEE26C5BA340057E0C9 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA82AED26C5BA340057E0C9 /* UIColor.swift */; };
 		E7E8263D5DC5327C7E701559 /* Pods_Ethereum_Wallet_Balance.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C669B6513C29F458670D54E2 /* Pods_Ethereum_Wallet_Balance.framework */; };
 /* End PBXBuildFile section */
@@ -32,6 +33,7 @@
 		1E738BC226C5B94F00C1667E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1E738BC526C5B94F00C1667E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1E738BC726C5B94F00C1667E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1E7897AE26C7425F0028248F /* ScanAddressQRCodeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanAddressQRCodeController.swift; sourceTree = "<group>"; };
 		1EA82AED26C5BA340057E0C9 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		C038D8AB7DA2DBC1DE7E18FF /* Pods-Ethereum Wallet Balance.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ethereum Wallet Balance.debug.xcconfig"; path = "Target Support Files/Pods-Ethereum Wallet Balance/Pods-Ethereum Wallet Balance.debug.xcconfig"; sourceTree = "<group>"; };
 		C669B6513C29F458670D54E2 /* Pods_Ethereum_Wallet_Balance.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Ethereum_Wallet_Balance.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -92,7 +94,7 @@
 				1E6B4E9426C5DC560077F66D /* Tools */,
 				1E6B4E8926C5D7350077F66D /* Views */,
 				1EA82AEC26C5BA260057E0C9 /* Extensions */,
-				1EA82AEB26C5BA1B0057E0C9 /* Screens */,
+				1EA82AEB26C5BA1B0057E0C9 /* View Controllers */,
 				1E738BC226C5B94F00C1667E /* Assets.xcassets */,
 				1E738BC426C5B94F00C1667E /* LaunchScreen.storyboard */,
 				1E738BC726C5B94F00C1667E /* Info.plist */,
@@ -100,12 +102,13 @@
 			path = "Ethereum Wallet Balance";
 			sourceTree = "<group>";
 		};
-		1EA82AEB26C5BA1B0057E0C9 /* Screens */ = {
+		1EA82AEB26C5BA1B0057E0C9 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				1E738BBD26C5B94F00C1667E /* HomeController.swift */,
+				1E7897AE26C7425F0028248F /* ScanAddressQRCodeController.swift */,
 			);
-			path = Screens;
+			path = "View Controllers";
 			sourceTree = "<group>";
 		};
 		1EA82AEC26C5BA260057E0C9 /* Extensions */ = {
@@ -256,6 +259,7 @@
 				1E6B4E9126C5D88B0077F66D /* UIView.swift in Sources */,
 				1EA82AEE26C5BA340057E0C9 /* UIColor.swift in Sources */,
 				1E738BBA26C5B94F00C1667E /* AppDelegate.swift in Sources */,
+				1E7897AF26C7425F0028248F /* ScanAddressQRCodeController.swift in Sources */,
 				1E738BBC26C5B94F00C1667E /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
