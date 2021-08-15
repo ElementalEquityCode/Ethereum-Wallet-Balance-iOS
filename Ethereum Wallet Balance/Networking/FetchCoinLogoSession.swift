@@ -9,7 +9,7 @@ import UIKit
 
 class FetchCoinLogoSession {
     
-    private unowned let coin: Coin
+    private let coin: EthereumToken
     
     private let baseUrl: String = "https://zapper.fi/images/"
     
@@ -25,7 +25,7 @@ class FetchCoinLogoSession {
         }
     }
     
-    init(coin: Coin) {
+    init(coin: EthereumToken) {
         self.coin = coin
         self.logoUrl = coin.logoUrl
     }

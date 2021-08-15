@@ -7,8 +7,8 @@
 
 import Foundation
 
-protocol CoinDelegate: AnyObject {
+protocol EthereumAddressDelegate: AnyObject {
     
-    func didAddCoin(coin: Coin)
+    func didAddEthereumAddress(address: EthereumAddress)
     
 }

@@ -7,12 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1E1ED60F26C98472005306BF /* EthereumAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E1ED60E26C98472005306BF /* EthereumAddress.swift */; };
 		1E55917C26C86D2A00175B60 /* FetchCoinLogoSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E55917B26C86D2A00175B60 /* FetchCoinLogoSession.swift */; };
-		1E55917F26C870B000175B60 /* CoinDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E55917E26C870B000175B60 /* CoinDelegate.swift */; };
+		1E55917F26C870B000175B60 /* EthereumAddressDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E55917E26C870B000175B60 /* EthereumAddressDelegate.swift */; };
 		1E57833B26C81FB900B0B80C /* AddressQRCodeScanDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E57833A26C81FB900B0B80C /* AddressQRCodeScanDelegate.swift */; };
 		1E57834026C822D000B0B80C /* SearchForAddressSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E57833F26C822D000B0B80C /* SearchForAddressSession.swift */; };
 		1E57834426C8250700B0B80C /* UIActivityIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E57834326C8250700B0B80C /* UIActivityIndicatorView.swift */; };
-		1E57834826C83B2C00B0B80C /* Coin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E57834726C83B2C00B0B80C /* Coin.swift */; };
+		1E57834826C83B2C00B0B80C /* EthereumToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E57834726C83B2C00B0B80C /* EthereumToken.swift */; };
 		1E6B4E8B26C5D7420077F66D /* AddressSearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E6B4E8A26C5D7420077F66D /* AddressSearchTextField.swift */; };
 		1E6B4E8E26C5D8070077F66D /* UIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E6B4E8D26C5D8070077F66D /* UIStackView.swift */; };
 		1E6B4E9126C5D88B0077F66D /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E6B4E9026C5D88B0077F66D /* UIView.swift */; };
@@ -29,12 +30,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1E1ED60E26C98472005306BF /* EthereumAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EthereumAddress.swift; sourceTree = "<group>"; };
 		1E55917B26C86D2A00175B60 /* FetchCoinLogoSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchCoinLogoSession.swift; sourceTree = "<group>"; };
-		1E55917E26C870B000175B60 /* CoinDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinDelegate.swift; sourceTree = "<group>"; };
+		1E55917E26C870B000175B60 /* EthereumAddressDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EthereumAddressDelegate.swift; sourceTree = "<group>"; };
 		1E57833A26C81FB900B0B80C /* AddressQRCodeScanDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressQRCodeScanDelegate.swift; sourceTree = "<group>"; };
 		1E57833F26C822D000B0B80C /* SearchForAddressSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchForAddressSession.swift; sourceTree = "<group>"; };
 		1E57834326C8250700B0B80C /* UIActivityIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIActivityIndicatorView.swift; sourceTree = "<group>"; };
-		1E57834726C83B2C00B0B80C /* Coin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coin.swift; sourceTree = "<group>"; };
+		1E57834726C83B2C00B0B80C /* EthereumToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EthereumToken.swift; sourceTree = "<group>"; };
 		1E6B4E8A26C5D7420077F66D /* AddressSearchTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressSearchTextField.swift; sourceTree = "<group>"; };
 		1E6B4E8D26C5D8070077F66D /* UIStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStackView.swift; sourceTree = "<group>"; };
 		1E6B4E9026C5D88B0077F66D /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
@@ -70,7 +72,7 @@
 			isa = PBXGroup;
 			children = (
 				1E57833A26C81FB900B0B80C /* AddressQRCodeScanDelegate.swift */,
-				1E55917E26C870B000175B60 /* CoinDelegate.swift */,
+				1E55917E26C870B000175B60 /* EthereumAddressDelegate.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -87,7 +89,8 @@
 		1E57834B26C83B3000B0B80C /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				1E57834726C83B2C00B0B80C /* Coin.swift */,
+				1E1ED60E26C98472005306BF /* EthereumAddress.swift */,
+				1E57834726C83B2C00B0B80C /* EthereumToken.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -298,12 +301,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				1E6B4E8B26C5D7420077F66D /* AddressSearchTextField.swift in Sources */,
-				1E55917F26C870B000175B60 /* CoinDelegate.swift in Sources */,
+				1E55917F26C870B000175B60 /* EthereumAddressDelegate.swift in Sources */,
 				1E6B4E8E26C5D8070077F66D /* UIStackView.swift in Sources */,
 				1E738BBE26C5B94F00C1667E /* HomeController.swift in Sources */,
 				1E57834026C822D000B0B80C /* SearchForAddressSession.swift in Sources */,
 				1E6B4E9626C5DC700077F66D /* Helpers.swift in Sources */,
 				1E57834426C8250700B0B80C /* UIActivityIndicatorView.swift in Sources */,
+				1E1ED60F26C98472005306BF /* EthereumAddress.swift in Sources */,
 				1E7897B226C7455C0028248F /* UIViewController.swift in Sources */,
 				1E6B4E9126C5D88B0077F66D /* UIView.swift in Sources */,
 				1EA82AEE26C5BA340057E0C9 /* UIColor.swift in Sources */,
@@ -312,7 +316,7 @@
 				1E7897AF26C7425F0028248F /* ScanAddressQRCodeController.swift in Sources */,
 				1E57833B26C81FB900B0B80C /* AddressQRCodeScanDelegate.swift in Sources */,
 				1E738BBC26C5B94F00C1667E /* SceneDelegate.swift in Sources */,
-				1E57834826C83B2C00B0B80C /* Coin.swift in Sources */,
+				1E57834826C83B2C00B0B80C /* EthereumToken.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

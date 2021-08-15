@@ -9,7 +9,7 @@ import UIKit
 
 class SearchForAddressSession {
     
-    private unowned let delegate: CoinDelegate
+    private unowned let delegate: EthereumAddressDelegate
     
     private let address: String
     
@@ -17,7 +17,7 @@ class SearchForAddressSession {
     
     private lazy var endPoint = "https://api.zapper.fi/v1/protocols/tokens/balances?addresses[]=\(address)&api_key=\(apiKey)"
     
-    init(address: String, delegate: CoinDelegate) {
+    init(address: String, delegate: EthereumAddressDelegate) {
         self.address = address
         self.delegate = delegate
     }
@@ -34,10 +34,11 @@ class SearchForAddressSession {
                 do {
                     guard let json = try JSONSerialization.jsonObject(with: data!) as? [String: Any] else { return }
                     
-                    if let address = json[json.keys.first!] as? [String: Any] {
+                    if let address = json[json.keys.first!] as? [String: Any], let addressString = json.keys.first {
                         
-                        let addressValue = self.getPortfolioValue(address)
-                        
+                        let ethereumAddress = EthereumAddress(address: addressString)
+                        ethereumAddress.addressValue = self.getPortfolioValue(address)
+                                                
                         if let products = address["products"] as? NSArray {
                             for item in products {
                                 if let dictionary = item as? [String: Any] {
@@ -46,17 +47,18 @@ class SearchForAddressSession {
                                             do {
                                                 let coinData = try JSONSerialization.data(withJSONObject: asset)
                                                 
-                                                let coin = try decoder.decode(Coin.self, from: coinData)
+                                                let coin = try decoder.decode(EthereumToken.self, from: coinData)
                                                 
-                                                if addressValue != nil {
-                                                    coin.percentOfTotalPortfolio = coin.usdBalance / addressValue!
+                                                if ethereumAddress.addressValue != nil {
+                                                    coin.percentOfTotalPortfolio = coin.usdBalance / ethereumAddress.addressValue!
                                                 }
                                                 
-                                                self.delegate.didAddCoin(coin: coin)
+                                                ethereumAddress.coins.append(coin)
                                             } catch let error {
                                                 print(error.localizedDescription)
                                             }
                                         }
+                                        self.delegate.didAddEthereumAddress(address: ethereumAddress)
                                         completion()
                                     }
                                 }

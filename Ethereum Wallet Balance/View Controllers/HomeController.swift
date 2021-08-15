@@ -7,11 +7,11 @@
 
 import UIKit
 
-class HomeController: UIViewController, UITextFieldDelegate, AddressQRCodeScanDelegate, CoinDelegate {
+class HomeController: UIViewController, UITextFieldDelegate, AddressQRCodeScanDelegate, EthereumAddressDelegate {
     
     // MARK: - Properties
     
-    private var coins = [Coin]()
+    private var addresses = [EthereumAddress]()
     
     private lazy var overallStackView = UIStackView.makeVerticalStackView(with: [addressSearchTextField, activityIndicatorView, UIView()], distribution: .fill, spacing: 20)
     
@@ -47,9 +47,8 @@ class HomeController: UIViewController, UITextFieldDelegate, AddressQRCodeScanDe
     
     // MARK: - CoinDelegate
     
-    func didAddCoin(coin: Coin) {
-        print(coin.description)
-        coins.append(coin)
+    func didAddEthereumAddress(address: EthereumAddress) {
+        print(address.address)
     }
     
     // MARK: - UITextFieldDelegate

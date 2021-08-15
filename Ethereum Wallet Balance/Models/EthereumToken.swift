@@ -7,7 +7,9 @@
 
 import UIKit
 
-class Coin: Codable {
+class EthereumToken: Codable {
+    
+    // MARK: - Properties
     
     var ticker: String
     var price: Double
@@ -28,6 +30,8 @@ class Coin: Codable {
         case usdBalance="balanceUSD"
         case logoUrl="img"
     }
+    
+    // MARK: - Initialization
     
     init(ticker: String, price: Double, coinBalance: Double, usdBalance: Double, logoUrl: String, percentOfTotalPortfolio: Double) {
         self.ticker = ticker
