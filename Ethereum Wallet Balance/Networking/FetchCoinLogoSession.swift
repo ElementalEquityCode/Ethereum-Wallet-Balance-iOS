@@ -9,6 +9,8 @@ import UIKit
 
 class FetchCoinLogoSession {
     
+    private unowned let delegate: FetchCoinLogoDelegate
+    
     private let coin: EthereumToken
     
     private let baseUrl: String = "https://zapper.fi/images/"
@@ -17,16 +19,9 @@ class FetchCoinLogoSession {
     
     private lazy var endPoint = baseUrl + logoUrl
     
-    private var logo: UIImage? {
-        didSet {
-            if logo != nil {
-                coin.logo = logo
-            }
-        }
-    }
-    
-    init(coin: EthereumToken) {
+    init(coin: EthereumToken, delegate: FetchCoinLogoDelegate) {
         self.coin = coin
+        self.delegate = delegate
         self.logoUrl = coin.logoUrl
     }
     
@@ -39,7 +34,7 @@ class FetchCoinLogoSession {
             } else {
                 if let imageData = data {
                     if let image = UIImage(data: imageData) {
-                        self.logo = image
+                        self.delegate.didFetchLogo(image: image)
                     }
                 }
             }

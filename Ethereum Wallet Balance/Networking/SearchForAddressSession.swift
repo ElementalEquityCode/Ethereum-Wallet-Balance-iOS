@@ -53,6 +53,10 @@ class SearchForAddressSession {
                                                     coin.percentOfTotalPortfolio = coin.usdBalance / ethereumAddress.addressValue!
                                                 }
                                                 
+                                                if coin.ticker == "ETH" {
+                                                    ethereumAddress.etherBalance = coin.coinBalance
+                                                }
+                                                
                                                 ethereumAddress.coins.append(coin)
                                             } catch let error {
                                                 print(error.localizedDescription)

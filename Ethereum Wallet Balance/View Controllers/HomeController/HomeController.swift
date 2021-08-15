@@ -11,13 +11,22 @@ class HomeController: UIViewController, UITextFieldDelegate, AddressQRCodeScanDe
     
     // MARK: - Properties
     
-    private var addresses = [EthereumAddress]()
+    var addresses = [EthereumAddress]()
     
-    private lazy var overallStackView = UIStackView.makeVerticalStackView(with: [addressSearchTextField, activityIndicatorView, UIView()], distribution: .fill, spacing: 20)
+    private lazy var overallStackView = UIStackView.makeVerticalStackView(with: [addressSearchTextField, activityIndicatorView, ethereumAddressCollectionView], distribution: .fill, spacing: 20)
     
     private let addressSearchTextField = AddressSearchTextField()
     
     private let activityIndicatorView =  UIActivityIndicatorView.makeActivityIndicatorView()
+    
+    let ethereumAddressCollectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
+        collectionView.backgroundColor = .clear
+        collectionView.alwaysBounceVertical = true
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        return collectionView
+    }()
     
     // MARK: - Initialization
 
@@ -27,6 +36,7 @@ class HomeController: UIViewController, UITextFieldDelegate, AddressQRCodeScanDe
         
         view.backgroundColor = .primaryBackgroundColor
         setupSubviews()
+        setupCollectionView()
         setupTargets()
         setupDelegates()
     }
@@ -48,7 +58,12 @@ class HomeController: UIViewController, UITextFieldDelegate, AddressQRCodeScanDe
     // MARK: - CoinDelegate
     
     func didAddEthereumAddress(address: EthereumAddress) {
-        print(address.address)
+        addresses.append(address)
+        
+        DispatchQueue.main.async { [unowned self] in
+            self.ethereumAddressCollectionView.insertSections(IndexSet(integer: self.addresses.count - 1))
+            self.ethereumAddressCollectionView.scrollToItem(at: IndexPath(item: 0, section: self.addresses.count - 1), at: .top, animated: true)
+        }
     }
     
     // MARK: - UITextFieldDelegate
@@ -120,6 +135,7 @@ class HomeController: UIViewController, UITextFieldDelegate, AddressQRCodeScanDe
         SearchForAddressSession(address: address, delegate: self).getCoinBalances {
             DispatchQueue.main.async {
                 self.activityIndicatorView.stopAnimating()
+                self.addressSearchTextField.text?.removeAll()
             }
         }
     }

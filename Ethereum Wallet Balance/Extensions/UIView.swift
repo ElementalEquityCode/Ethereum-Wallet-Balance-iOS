@@ -35,4 +35,12 @@ extension UIView {
         }
     }
     
+    static func createBorderView() -> UIView {
+        let view = UIView()
+        view.backgroundColor = .borderColor
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.heightAnchor.constraint(equalToConstant: 1.5).isActive = true
+        return view
+    }
+    
 }

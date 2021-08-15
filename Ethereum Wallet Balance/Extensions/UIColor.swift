@@ -27,4 +27,8 @@ extension UIColor {
         return traitCollection.userInterfaceStyle == .light ? UIColor(red: 107/255, green: 119/255, blue: 140/255, alpha: 1) : UIColor(red: 145/255, green: 158/255, blue: 171/255, alpha: 1)
     }
     
+    static let borderColor: UIColor = UIColor { (traitCollection: UITraitCollection) -> UIColor in
+        return traitCollection.userInterfaceStyle == .light ? UIColor(red: 0, green: 0, blue: 0, alpha: 0.12) :  UIColor(red: 145/255, green: 158/255, blue: 171/255, alpha: 0.24)
+    }
+    
 }

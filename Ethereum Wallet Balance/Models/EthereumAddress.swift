@@ -10,6 +10,7 @@ import UIKit
 class EthereumAddress {
     
     let address: String
+    var etherBalance: Double = 0
     var addressValue: Double?
     var coins = [EthereumToken]()
     
