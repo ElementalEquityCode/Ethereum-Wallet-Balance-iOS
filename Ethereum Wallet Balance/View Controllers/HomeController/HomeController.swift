@@ -62,7 +62,9 @@ class HomeController: UIViewController, UITextFieldDelegate, AddressQRCodeScanDe
         
         DispatchQueue.main.async { [unowned self] in
             self.ethereumAddressCollectionView.insertSections(IndexSet(integer: self.addresses.count - 1))
-            self.ethereumAddressCollectionView.scrollToItem(at: IndexPath(item: 0, section: self.addresses.count - 1), at: .top, animated: true)
+            if let header = self.ethereumAddressCollectionView.layoutAttributesForSupplementaryElement(ofKind: UICollectionView.elementKindSectionHeader, at: IndexPath(item: 0, section: self.addresses.count - 1)) {
+                self.ethereumAddressCollectionView.setContentOffset(header.frame.origin, animated: true)
+            }
         }
     }
     
