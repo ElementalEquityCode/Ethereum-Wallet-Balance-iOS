@@ -13,25 +13,25 @@ class EthereumAddressHeader: UICollectionViewCell {
     
     var ethereumAddress: String = "" {
         didSet {
-            ethereumAddressValueLabel.attributedText = NSAttributedString(string: ethereumAddress, attributes: [NSAttributedString.Key.foregroundColor: UIColor.primaryTextFieldTextColor, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .bold)])
+            ethereumAddressValueLabel.text = ethereumAddress
         }
     }
     
     var etherBalance: Double = 0.0 {
         didSet {
-            etherBalanceValueLabel.attributedText = NSAttributedString(string: "\(formatDoubleToTwoDecimalPlaces(value: etherBalance))", attributes: [NSAttributedString.Key.foregroundColor: UIColor.primaryTextFieldTextColor, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .bold)])
+            etherBalanceValueLabel.text = "\(formatDoubleToTwoDecimalPlaces(value: etherBalance))"
         }
     }
     
     var erc20Tokens: Int = 0 {
         didSet {
-            erc20TokensCountValueLabel.attributedText = NSAttributedString(string: "\(erc20Tokens)", attributes: [NSAttributedString.Key.foregroundColor: UIColor.primaryTextFieldTextColor, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .bold)])
+            erc20TokensCountValueLabel.text = "\(erc20Tokens)"
         }
     }
     
     var addressValue: Double = 0.0 {
         didSet {
-            addressValueLabel.attributedText = NSAttributedString(string: "$\(formatDoubleToTwoDecimalPlaces(value: addressValue))", attributes: [NSAttributedString.Key.foregroundColor: UIColor.primaryTextFieldTextColor, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .bold)])
+            addressValueLabel.text = "$\(formatDoubleToTwoDecimalPlaces(value: addressValue))"
         }
     }
     
@@ -45,6 +45,8 @@ class EthereumAddressHeader: UICollectionViewCell {
     
     private let ethereumAddressValueLabel: UILabel = {
         let label = UILabel()
+        label.textColor = .primaryTextFieldTextColor
+        label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -61,6 +63,8 @@ class EthereumAddressHeader: UICollectionViewCell {
     
     private let etherBalanceValueLabel: UILabel = {
         let label = UILabel()
+        label.textColor = .primaryTextFieldTextColor
+        label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -77,6 +81,8 @@ class EthereumAddressHeader: UICollectionViewCell {
     
     private let erc20TokensCountValueLabel: UILabel = {
         let label = UILabel()
+        label.textColor = .primaryTextFieldTextColor
+        label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
