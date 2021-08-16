@@ -11,6 +11,8 @@ class EthereumTokenCell: UICollectionViewCell {
     
     // MARK: - Properties
     
+    var hasCellBeenPreviouslyDisplayed = false
+    
     var coin: EthereumToken? {
         didSet {
             if let coin = self.coin {
@@ -56,12 +58,15 @@ class EthereumTokenCell: UICollectionViewCell {
     
     private let valueLabel: UILabel = {
         let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 12.5, weight: .semibold)
+        label.textColor = .primaryTextFieldTextColor
         label.text = "Value"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     let circleLayer = CAShapeLayer()
+    let bottomCAShapeLayer = CAShapeLayer()
 
     private lazy var footerLabels = UIStackView.makeHorizontalStackView(with: [balanceValueLabel, tokenValueLabel], distribution: .equalSpacing, spacing: 5)
     
@@ -83,6 +88,8 @@ class EthereumTokenCell: UICollectionViewCell {
         return label
     }()
     
+    private let borderView = UIView.createBorderView()
+    
     // MARK: - Initialization
     
     override init(frame: CGRect) {
@@ -90,6 +97,17 @@ class EthereumTokenCell: UICollectionViewCell {
         
         setupCell()
         setupSubviews()
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        balanceValueLabel.attributedText = NSAttributedString()
+        tokenValueLabel.text = ""
+        coinLogoImageView.image = nil
+        layer.cornerRadius = 0
+        borderView.removeFromSuperview()
+        bottomCAShapeLayer.strokeColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.05).cgColor
     }
     
     override func layoutSubviews() {
@@ -133,8 +151,6 @@ class EthereumTokenCell: UICollectionViewCell {
     }
     
     private func setupCAShapeLayer() {
-        let bottomCAShapeLayer = CAShapeLayer()
-        
         let path = UIBezierPath(arcCenter: CAShapeLayerContainerView.center, radius: CAShapeLayerContainerView.frame.width / 2, startAngle: -90 * (CGFloat.pi / 180), endAngle: 270 * (CGFloat.pi / 180), clockwise: true)
         
         bottomCAShapeLayer.path = path.cgPath
@@ -145,7 +161,7 @@ class EthereumTokenCell: UICollectionViewCell {
         circleLayer.path = path.cgPath
         circleLayer.lineWidth = 5
         circleLayer.strokeColor = UIColor.primaryColor.cgColor
-        circleLayer.fillColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.05).cgColor
+        circleLayer.fillColor = UIColor.clear.cgColor
         circleLayer.strokeStart = 0
         
         bottomCAShapeLayer.addSublayer(circleLayer)
@@ -164,7 +180,6 @@ class EthereumTokenCell: UICollectionViewCell {
     }
     
     func setupBorderView() {
-        let borderView = UIView.createBorderView()
         addSubview(borderView)
         borderView.anchor(topAnchor: nil, trailingAnchor: trailingAnchor, bottomAnchor: bottomAnchor, leadingAnchor: leadingAnchor, topPadding: 0, trailingPadding: 0, bottomPadding: 0, leadingPadding: 0, height: 0, width: 0)
     }
@@ -177,7 +192,7 @@ class EthereumTokenCell: UICollectionViewCell {
         animation.toValue = value
         animation.isRemovedOnCompletion = false
         animation.fillMode = .forwards
-        animation.duration = 0.5
+        animation.duration = 1
         animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
         circleLayer.add(animation, forKey: nil)
     }

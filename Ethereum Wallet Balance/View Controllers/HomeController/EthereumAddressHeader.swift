@@ -37,8 +37,7 @@ class EthereumAddressHeader: UICollectionViewCell {
     
     private let ethereumAddressLabel: UILabel = {
         let label = UILabel()
-        let attributedString1 = NSAttributedString(string: "ETHEREUM ADDRESS", attributes: [NSAttributedString.Key.foregroundColor: UIColor.placeholderTextColor, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .semibold)])
-        label.attributedText = attributedString1
+        label.attributedText = NSAttributedString(string: "ETH ADDRESS", attributes: [NSAttributedString.Key.foregroundColor: UIColor.placeholderTextColor, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .semibold)])
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -55,8 +54,7 @@ class EthereumAddressHeader: UICollectionViewCell {
         
     private let etherBalanceLabel: UILabel = {
         let label = UILabel()
-        let attributedString1 = NSAttributedString(string: "ETHER BALANCE", attributes: [NSAttributedString.Key.foregroundColor: UIColor.placeholderTextColor, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .semibold)])
-        label.attributedText = attributedString1
+        label.attributedText = NSAttributedString(string: "ETHER BALANCE", attributes: [NSAttributedString.Key.foregroundColor: UIColor.placeholderTextColor, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .semibold)])
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -73,8 +71,7 @@ class EthereumAddressHeader: UICollectionViewCell {
         
     private let erc20TokensCountLabel: UILabel = {
         let label = UILabel()
-        let attributedString1 = NSAttributedString(string: "ERC-20 TOKENS", attributes: [NSAttributedString.Key.foregroundColor: UIColor.placeholderTextColor, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .semibold)])
-        label.attributedText = attributedString1
+        label.attributedText = NSAttributedString(string: "ERC-20 TOKENS", attributes: [NSAttributedString.Key.foregroundColor: UIColor.placeholderTextColor, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .semibold)])
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -91,14 +88,16 @@ class EthereumAddressHeader: UICollectionViewCell {
     
     private let addressLabel: UILabel = {
         let label = UILabel()
-        let attributedString1 = NSAttributedString(string: "ADDRESS VALUE", attributes: [NSAttributedString.Key.foregroundColor: UIColor.placeholderTextColor, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .semibold)])
-        label.attributedText = attributedString1
+        label.attributedText = NSAttributedString(string: "ADDRESS VALUE", attributes: [NSAttributedString.Key.foregroundColor: UIColor.placeholderTextColor, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .semibold)])
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     private let addressValueLabel: UILabel = {
         let label = UILabel()
+        label.textColor = .primaryTextFieldTextColor
+        label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        label.adjustsFontSizeToFitWidth = true
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()

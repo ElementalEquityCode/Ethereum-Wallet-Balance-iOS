@@ -28,13 +28,19 @@ class FetchCoinLogoSession {
     func getLogoImage() {
         guard let url = URL(string: endPoint) else { return }
         
-        URLSession.shared.dataTask(with: url) { (data, _, error) in
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
             if let error = error {
                 print(error.localizedDescription)
             } else {
-                if let imageData = data {
-                    if let image = UIImage(data: imageData) {
-                        self.delegate.didFetchLogo(image: image)
+                if let urlResponse = response! as? HTTPURLResponse {
+                    if urlResponse.statusCode == 404 {
+                        self.delegate.didFetchLogo(image: UIImage(named: "eth"))
+                    } else {
+                        if let imageData = data {
+                            if let image = UIImage(data: imageData) {
+                                self.delegate.didFetchLogo(image: image)
+                            }
+                        }
                     }
                 }
             }

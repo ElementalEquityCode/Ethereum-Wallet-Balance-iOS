@@ -12,7 +12,7 @@ class HomeController: UIViewController, UITextFieldDelegate, AddressQRCodeScanDe
     // MARK: - Properties
     
     var addresses = [EthereumAddress]()
-    
+        
     private lazy var overallStackView = UIStackView.makeVerticalStackView(with: [addressSearchTextField, activityIndicatorView, ethereumAddressCollectionView], distribution: .fill, spacing: 20)
     
     private let addressSearchTextField = AddressSearchTextField()
