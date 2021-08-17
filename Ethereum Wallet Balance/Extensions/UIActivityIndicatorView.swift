@@ -12,8 +12,6 @@ extension UIActivityIndicatorView {
     static func makeActivityIndicatorView() -> UIActivityIndicatorView {
         let activityIndicatorView = UIActivityIndicatorView()
         activityIndicatorView.color = .primaryColor
-        activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
-        activityIndicatorView.heightAnchor.constraint(equalToConstant: 20).isActive = true
         return activityIndicatorView
     }
     
