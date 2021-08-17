@@ -24,56 +24,73 @@ class SearchForAddressSession {
     
     func getCoinBalances(completion: @escaping () -> Void) {
         guard let url = URL(string: endPoint) else { return }
-        let decoder = JSONDecoder()
         
-        URLSession.shared.dataTask(with: url) { (data, _, error) in
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
             if let error = error {
                 print(error.localizedDescription)
                 completion()
             } else {
-                do {
-                    guard let json = try JSONSerialization.jsonObject(with: data!) as? [String: Any] else { return }
-                    
-                    if let address = json[json.keys.first!] as? [String: Any], let addressString = json.keys.first {
-                        
-                        let ethereumAddress = EthereumAddress(address: addressString)
-                        ethereumAddress.addressValue = self.getPortfolioValue(address)
-                                                
-                        if let products = address["products"] as? NSArray {
-                            for item in products {
-                                if let dictionary = item as? [String: Any] {
-                                    if let assets = dictionary["assets"] as? [[String: Any]] {
-                                        for asset in assets {
-                                            do {
-                                                let coinData = try JSONSerialization.data(withJSONObject: asset)
-                                                
-                                                let coin = try decoder.decode(EthereumToken.self, from: coinData)
-                                                
-                                                if ethereumAddress.addressValue != nil {
-                                                    coin.percentOfTotalPortfolio = coin.usdBalance / ethereumAddress.addressValue!
-                                                }
-                                                
-                                                if coin.ticker == "ETH" {
-                                                    ethereumAddress.etherBalance = coin.coinBalance
-                                                }
-                                                
-                                                ethereumAddress.coins.append(coin)
-                                            } catch let error {
-                                                print(error.localizedDescription)
+                if let urlResponse = response! as? HTTPURLResponse {
+                    if urlResponse.statusCode == 200 {
+                        self.getTokensFromAddress(data: data, completion: completion)
+                    } else if urlResponse.statusCode == 400 {
+                        self.delegate.didAddEthereumAddress(address: nil)
+                        completion()
+                    }
+                }
+            }
+        }.resume()
+    }
+    
+    private func getTokensFromAddress(data: Data?, completion: @escaping () -> Void) {
+        let decoder = JSONDecoder()
+
+        do {
+            guard let json = try JSONSerialization.jsonObject(with: data!) as? [String: Any] else { return }
+            
+            if let address = json[json.keys.first!] as? [String: Any], let addressString = json.keys.first {
+                
+                let ethereumAddress = EthereumAddress(address: addressString)
+                ethereumAddress.addressValue = self.getPortfolioValue(address)
+                                        
+                if ethereumAddress.addressValue == 0 {
+                    self.delegate.didAddEthereumAddress(address: ethereumAddress)
+                    completion()
+                } else {
+                    if let products = address["products"] as? NSArray {
+                        for item in products {
+                            if let dictionary = item as? [String: Any] {
+                                if let assets = dictionary["assets"] as? [[String: Any]] {
+                                    for asset in assets {
+                                        do {
+                                            let coinData = try JSONSerialization.data(withJSONObject: asset)
+                                            
+                                            let coin = try decoder.decode(EthereumToken.self, from: coinData)
+                                            
+                                            if ethereumAddress.addressValue != nil {
+                                                coin.percentOfTotalPortfolio = coin.usdBalance / ethereumAddress.addressValue!
                                             }
+                                            
+                                            if coin.ticker == "ETH" {
+                                                ethereumAddress.etherBalance = coin.coinBalance
+                                            }
+                                            
+                                            ethereumAddress.coins.append(coin)
+                                        } catch let error {
+                                            print(error.localizedDescription)
                                         }
-                                        self.delegate.didAddEthereumAddress(address: ethereumAddress)
-                                        completion()
                                     }
+                                    self.delegate.didAddEthereumAddress(address: ethereumAddress)
+                                    completion()
                                 }
                             }
                         }
                     }
-                } catch let error {
-                    print(error.localizedDescription)
                 }
             }
-        }.resume()
+        } catch let error {
+            print(error.localizedDescription)
+        }
     }
     
     private func getPortfolioValue(_ address: [String: Any]) -> Double? {

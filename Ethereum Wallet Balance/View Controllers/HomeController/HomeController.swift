@@ -59,13 +59,25 @@ class HomeController: UIViewController, UITextFieldDelegate, AddressQRCodeScanDe
     
     // MARK: - CoinDelegate
     
-    func didAddEthereumAddress(address: EthereumAddress) {
-        addresses.append(address)
-        
-        DispatchQueue.main.async { [unowned self] in
-            self.ethereumAddressCollectionView.insertSections(IndexSet(integer: self.addresses.count - 1))
-            if let header = self.ethereumAddressCollectionView.layoutAttributesForSupplementaryElement(ofKind: UICollectionView.elementKindSectionHeader, at: IndexPath(item: 0, section: self.addresses.count - 1)) {
-                self.ethereumAddressCollectionView.setContentOffset(header.frame.origin, animated: true)
+    func didAddEthereumAddress(address: EthereumAddress?) {
+        if address != nil {
+            if address!.addressValue != 0 {
+                addresses.append(address!)
+                
+                DispatchQueue.main.async { [unowned self] in
+                    self.ethereumAddressCollectionView.insertSections(IndexSet(integer: self.addresses.count - 1))
+                    if let header = self.ethereumAddressCollectionView.layoutAttributesForSupplementaryElement(ofKind: UICollectionView.elementKindSectionHeader, at: IndexPath(item: 0, section: self.addresses.count - 1)) {
+                        self.ethereumAddressCollectionView.setContentOffset(header.frame.origin, animated: true)
+                    }
+                }
+            } else if address!.addressValue == 0 {
+                DispatchQueue.main.async {
+                    self.handleError(with: "The Ethereum address entered has no assets")
+                }
+            }
+        } else {
+            DispatchQueue.main.async {
+                self.handleError(with: "Ethereum address not found")
             }
         }
     }
@@ -152,6 +164,14 @@ class HomeController: UIViewController, UITextFieldDelegate, AddressQRCodeScanDe
         searchForAddress(with: value)
     }
     
+    // MARK: - NotificationCenter
+    
+    private func handleError(with message: String) {
+        let alertController = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Close", style: .default, handler: nil))
+        present(alertController, animated: true)
+    }
+    
     // MARK: - Helpers
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -162,7 +182,7 @@ class HomeController: UIViewController, UITextFieldDelegate, AddressQRCodeScanDe
     
     private func testFullRegex(with string: String) -> Bool {
         do {
-            let regex = try NSRegularExpression(pattern: "^(0x([a-fA-F0-9]{40}))$", options: .caseInsensitive)
+            let regex = try NSRegularExpression(pattern: "^(0x([a-fA-F0-9]{40}))$")
                         
             return regex.numberOfMatches(in: string, options: [], range: NSRange(location: 0, length: string.count)) > 0 ? true : false
         } catch let error {

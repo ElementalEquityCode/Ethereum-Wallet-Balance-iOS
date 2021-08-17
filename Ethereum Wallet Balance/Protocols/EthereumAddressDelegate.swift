@@ -9,6 +9,6 @@ import Foundation
 
 protocol EthereumAddressDelegate: AnyObject {
     
-    func didAddEthereumAddress(address: EthereumAddress)
+    func didAddEthereumAddress(address: EthereumAddress?)
     
 }
