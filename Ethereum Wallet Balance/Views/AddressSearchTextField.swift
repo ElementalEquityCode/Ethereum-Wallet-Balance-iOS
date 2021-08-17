@@ -40,6 +40,10 @@ class AddressSearchTextField: UITextField {
     }
     
     private func setupTextField() {
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOpacity = traitCollection.userInterfaceStyle == .dark ? 0.4 : 0.12
+        layer.shadowOffset = CGSize(width: 1, height: 2)
+        
         attributedPlaceholder = NSAttributedString(string: "Enter an Ethereum Address", attributes: [NSAttributedString.Key.foregroundColor: UIColor.placeholderTextColor])
         smartInsertDeleteType = .no
         
@@ -47,7 +51,7 @@ class AddressSearchTextField: UITextField {
         heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.075).isActive = true
         
         backgroundColor = .primaryViewBackgroundColor
-        textColor = .primaryTextFieldTextColor
+        textColor = .primaryTextColor
         
         layer.cornerRadius = viewCornerRadius
         
@@ -56,7 +60,7 @@ class AddressSearchTextField: UITextField {
         
         let leftViewImageView = UIImageView(image: UIImage(named: "magnifyingglass"))
         leftViewImageView.translatesAutoresizingMaskIntoConstraints = false
-        leftViewImageView.tintColor = .primaryTextFieldTextColor
+        leftViewImageView.tintColor = .primaryTextColor
         
         leftViewContainerView.addSubview(leftViewImageView)
         leftViewImageView.anchor(topAnchor: leftViewContainerView.topAnchor, trailingAnchor: leftViewContainerView.trailingAnchor, bottomAnchor: leftViewContainerView.bottomAnchor, leadingAnchor: leftViewContainerView.leadingAnchor, topPadding: 5, trailingPadding: 10, bottomPadding: 5, leadingPadding: 10, height: 0, width: 0)
@@ -84,6 +88,18 @@ class AddressSearchTextField: UITextField {
     
     @objc private func performImpactFeedbackGenerator() {
         UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+    }
+    
+    // MARK: - TraitCollection
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            traitCollection.performAsCurrent {
+                self.layer.shadowOpacity = traitCollection.userInterfaceStyle == .dark ? 0.4 : 0.12
+            }
+        }
     }
     
 }

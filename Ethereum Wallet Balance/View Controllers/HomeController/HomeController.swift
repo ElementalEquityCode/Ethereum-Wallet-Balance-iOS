@@ -23,6 +23,8 @@ class HomeController: UIViewController, UITextFieldDelegate, AddressQRCodeScanDe
     
     let ethereumAddressCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
+        collectionView.collectionViewLayout.invalidateLayout()
         collectionView.layer.cornerRadius = viewCornerRadius
         collectionView.backgroundColor = .clear
         collectionView.alwaysBounceVertical = true
@@ -154,6 +156,7 @@ class HomeController: UIViewController, UITextFieldDelegate, AddressQRCodeScanDe
                 }
             }
         }))
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         present(alertController, animated: true)
     }
     
@@ -162,8 +165,8 @@ class HomeController: UIViewController, UITextFieldDelegate, AddressQRCodeScanDe
     func searchForAddress(with address: String) {
         activityIndicatorView.startAnimating()
         
-        SearchForAddressSession(address: address, delegate: self).getCoinBalances {
-            DispatchQueue.main.async {
+        SearchForAddressSession(address: address, delegate: self).getCoinBalances { [unowned self] in
+            DispatchQueue.main.async { [unowned self] in
                 self.activityIndicatorView.stopAnimating()
                 self.addressSearchTextField.text?.removeAll()
             }

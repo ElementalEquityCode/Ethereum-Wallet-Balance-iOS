@@ -18,7 +18,7 @@ class EthereumTokenCell: UICollectionViewCell {
                     coinLogoImageView.image = image
                 }
                 
-                let attributedString1 = NSAttributedString(string: "\(formatDoubleToTwoDecimalPlaces(value: coin.usdBalance)) ", attributes: [NSAttributedString.Key.foregroundColor: UIColor(red: 76/255, green: 175/255, blue: 80/255, alpha: 1), NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12.5, weight: .medium)])
+                let attributedString1 = NSAttributedString(string: "\(formatDoubleToTwoDecimalPlaces(value: coin.coinBalance)) ", attributes: [NSAttributedString.Key.foregroundColor: UIColor(red: 76/255, green: 175/255, blue: 80/255, alpha: 1), NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12.5, weight: .medium)])
                 let attributedString2  = NSAttributedString(string: "\(coin.ticker)", attributes: [NSAttributedString.Key.foregroundColor: UIColor.placeholderTextColor, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12.5, weight: .light)])
                 let array = NSMutableAttributedString()
                 array.append(attributedString1)
@@ -41,7 +41,7 @@ class EthereumTokenCell: UICollectionViewCell {
     private let balanceLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12.5, weight: .semibold)
-        label.textColor = .primaryTextFieldTextColor
+        label.textColor = .primaryTextColor
         label.text = "Balance"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -50,7 +50,7 @@ class EthereumTokenCell: UICollectionViewCell {
     private let valueLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12.5, weight: .semibold)
-        label.textColor = .primaryTextFieldTextColor
+        label.textColor = .primaryTextColor
         label.text = "Value"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label

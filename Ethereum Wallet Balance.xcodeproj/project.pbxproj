@@ -27,6 +27,7 @@
 		1E738BBE26C5B94F00C1667E /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E738BBD26C5B94F00C1667E /* HomeController.swift */; };
 		1E738BC326C5B94F00C1667E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E738BC226C5B94F00C1667E /* Assets.xcassets */; };
 		1E738BC626C5B94F00C1667E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1E738BC426C5B94F00C1667E /* LaunchScreen.storyboard */; };
+		1E74F6FD26CB5D3C00D3518E /* EthereumTokenInformationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E74F6FC26CB5D3C00D3518E /* EthereumTokenInformationController.swift */; };
 		1E7897AF26C7425F0028248F /* ScanAddressQRCodeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7897AE26C7425F0028248F /* ScanAddressQRCodeController.swift */; };
 		1E7897B226C7455C0028248F /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7897B126C7455C0028248F /* UIViewController.swift */; };
 		1EA82AEE26C5BA340057E0C9 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA82AED26C5BA340057E0C9 /* UIColor.swift */; };
@@ -56,6 +57,7 @@
 		1E738BC226C5B94F00C1667E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1E738BC526C5B94F00C1667E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1E738BC726C5B94F00C1667E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1E74F6FC26CB5D3C00D3518E /* EthereumTokenInformationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EthereumTokenInformationController.swift; sourceTree = "<group>"; };
 		1E7897AE26C7425F0028248F /* ScanAddressQRCodeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanAddressQRCodeController.swift; sourceTree = "<group>"; };
 		1E7897B126C7455C0028248F /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		1EA82AED26C5BA340057E0C9 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
@@ -173,6 +175,7 @@
 			children = (
 				1E1ED61426C988EE005306BF /* HomeController */,
 				1E7897AE26C7425F0028248F /* ScanAddressQRCodeController.swift */,
+				1E74F6FC26CB5D3C00D3518E /* EthereumTokenInformationController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -333,6 +336,7 @@
 				1E7897B226C7455C0028248F /* UIViewController.swift in Sources */,
 				1E6B4E9126C5D88B0077F66D /* UIView.swift in Sources */,
 				1EA82AEE26C5BA340057E0C9 /* UIColor.swift in Sources */,
+				1E74F6FD26CB5D3C00D3518E /* EthereumTokenInformationController.swift in Sources */,
 				1E738BBA26C5B94F00C1667E /* AppDelegate.swift in Sources */,
 				1E55917C26C86D2A00175B60 /* FetchCoinLogoSession.swift in Sources */,
 				1E7897AF26C7425F0028248F /* ScanAddressQRCodeController.swift in Sources */,

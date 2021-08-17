@@ -10,23 +10,16 @@ import UIKit
 class FetchCoinLogoSession {
     
     private unowned let delegate: FetchCoinLogoDelegate
-    
-    private let coin: EthereumToken
-    
-    private let baseUrl: String = "https://zapper.fi/images/"
-    
-    private let logoUrl: String
-    
-    private lazy var endPoint = baseUrl + logoUrl
-    
+        
+    private let assetUrl: String
+            
     init(coin: EthereumToken, delegate: FetchCoinLogoDelegate) {
-        self.coin = coin
+        self.assetUrl = coin.logoUrl
         self.delegate = delegate
-        self.logoUrl = coin.logoUrl
     }
     
     func getLogoImage() {
-        guard let url = URL(string: endPoint) else { return }
+        guard let url = URL(string: assetUrl) else { return }
         
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             if let error = error {

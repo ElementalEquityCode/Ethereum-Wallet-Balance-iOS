@@ -19,7 +19,7 @@ extension UIColor {
         return traitCollection.userInterfaceStyle == .light ? UIColor.white : UIColor(red: 34/255, green: 43/255, blue: 54/255, alpha: 1)
     }
     
-    static let primaryTextFieldTextColor: UIColor = UIColor { (traitCollection: UITraitCollection) -> UIColor in
+    static let primaryTextColor: UIColor = UIColor { (traitCollection: UITraitCollection) -> UIColor in
         return traitCollection.userInterfaceStyle == .light ? UIColor(red: 23/255, green: 43/255, blue: 77/255, alpha: 1) : UIColor.white
     }
     

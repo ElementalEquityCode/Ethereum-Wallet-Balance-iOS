@@ -77,15 +77,25 @@ extension HomeController: UICollectionViewDataSource, UICollectionViewDelegate, 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 20, left: 0, bottom: section == addresses.count - 1 ? 0 : 40, right: 0)
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let cell = ethereumAddressCollectionView.cellForItem(at: indexPath) as? EthereumTokenCell {
+            if let token = cell.coin {
+                let navigationController = UINavigationController(rootViewController: EthereumTokenInformationController(token: token))
+                navigationController.modalPresentationStyle = .fullScreen
+                present(navigationController, animated: true)
+            }
+        }
+    }
         
     // MARK: - UICollectionViewDelegateFlowLayout
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: collectionView.frame.width, height: 266)
+        return CGSize(width: collectionView.frame.width - 10, height: 266)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width, height: 70)
+        return CGSize(width: collectionView.frame.width - 10, height: 70)
     }
     
 }

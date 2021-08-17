@@ -44,7 +44,7 @@ class EthereumAddressHeader: UICollectionViewCell {
     
     private let ethereumAddressValueLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .primaryTextFieldTextColor
+        label.textColor = .primaryTextColor
         label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -61,7 +61,7 @@ class EthereumAddressHeader: UICollectionViewCell {
     
     private let etherBalanceValueLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .primaryTextFieldTextColor
+        label.textColor = .primaryTextColor
         label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -78,7 +78,7 @@ class EthereumAddressHeader: UICollectionViewCell {
     
     private let erc20TokensCountValueLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .primaryTextFieldTextColor
+        label.textColor = .primaryTextColor
         label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -95,7 +95,7 @@ class EthereumAddressHeader: UICollectionViewCell {
     
     private let addressValueLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .primaryTextFieldTextColor
+        label.textColor = .primaryTextColor
         label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         label.adjustsFontSizeToFitWidth = true
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -118,6 +118,9 @@ class EthereumAddressHeader: UICollectionViewCell {
     private func setupCell() {
         backgroundColor = .primaryViewBackgroundColor
         layer.cornerRadius = viewCornerRadius
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOpacity = traitCollection.userInterfaceStyle == .dark ? 0.4 : 0.12
+        layer.shadowOffset = CGSize(width: 1, height: 2)
     }
     
     private func setupSubviews() {
@@ -156,6 +159,18 @@ class EthereumAddressHeader: UICollectionViewCell {
         
         addressLabel.anchor(topAnchor: borderView3.bottomAnchor, trailingAnchor: centerXAnchor, bottomAnchor: bottomAnchor, leadingAnchor: leadingAnchor, topPadding: 0, trailingPadding: 0, bottomPadding: 0, leadingPadding: 24, height: 0, width: 0)
         addressValueLabel.anchor(topAnchor: borderView3.bottomAnchor, trailingAnchor: trailingAnchor, bottomAnchor: bottomAnchor, leadingAnchor: centerXAnchor, topPadding: 0, trailingPadding: 24, bottomPadding: 0, leadingPadding: 24, height: 0, width: 0)
+    }
+    
+    // MARK: - TraitCollection
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            traitCollection.performAsCurrent {
+                self.layer.shadowOpacity = traitCollection.userInterfaceStyle == .dark ? 0.4 : 0.12
+            }
+        }
     }
     
 }
