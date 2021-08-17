@@ -29,6 +29,10 @@ extension HomeController: UICollectionViewDataSource, UICollectionViewDelegate, 
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "header", for: indexPath) as? EthereumAddressHeader {
             
+            let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleEthereumAddressHeaderTap))
+            tapGestureRecognizer.name = "\(indexPath.section)"
+            view.addGestureRecognizer(tapGestureRecognizer)
+            
             let address = addresses[indexPath.section]
             
             view.ethereumAddress = address.address

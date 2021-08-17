@@ -23,6 +23,7 @@ class HomeController: UIViewController, UITextFieldDelegate, AddressQRCodeScanDe
     
     let ethereumAddressCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
+        collectionView.layer.cornerRadius = viewCornerRadius
         collectionView.backgroundColor = .clear
         collectionView.alwaysBounceVertical = true
         collectionView.showsVerticalScrollIndicator = false
@@ -141,6 +142,19 @@ class HomeController: UIViewController, UITextFieldDelegate, AddressQRCodeScanDe
         let navigationController = UINavigationController(rootViewController: scanAddressQRCodeController)
         navigationController.modalPresentationStyle = .fullScreen
         present(navigationController, animated: true)
+    }
+    
+    @objc func handleEthereumAddressHeaderTap(gesture: UITapGestureRecognizer) {
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        alertController.addAction(UIAlertAction(title: "Delete Address", style: .destructive, handler: { (_) in
+            if let sectionToDeleteAsString = gesture.name {
+                if let sectionToDelete = Int(sectionToDeleteAsString) {
+                    self.addresses.remove(at: sectionToDelete)
+                    self.ethereumAddressCollectionView.deleteSections(IndexSet(integer: sectionToDelete))
+                }
+            }
+        }))
+        present(alertController, animated: true)
     }
     
     // MARK: - URLSessions
