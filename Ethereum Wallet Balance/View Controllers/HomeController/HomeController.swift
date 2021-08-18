@@ -5,6 +5,11 @@
 //  Created by Daniel Valencia on 8/12/21.
 //
 
+// Issues so far
+// Memory leaks associated with URLSession
+// Matching the ID's with the correct CoinGecko coin because some have repeated IDs
+// Add Core Data
+
 import UIKit
 
 class HomeController: UIViewController, UITextFieldDelegate, AddressQRCodeScanDelegate, EthereumAddressDelegate {

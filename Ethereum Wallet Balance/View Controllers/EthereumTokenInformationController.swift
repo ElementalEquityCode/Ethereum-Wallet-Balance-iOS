@@ -7,11 +7,54 @@
 
 import UIKit
 
-class EthereumTokenInformationController: UIViewController {
+class EthereumTokenInformationController: UIViewController, FetchCoinGeckoCoinIdDelegate, FetchCoinGeckoDailyAssetChangeDelegate {
     
     // MARK: - Properties
     
+    // ALGORITHM FETCH DAILY PRICE CHANGE
+    
+    // GET THE TICKER OF THE TOKEN
+    
+    // GET https://api.coingecko.com/api/v3/coins/list
+    
+    // FIND THE COIN WITH THE MATCHING SYMBOL PROPERTY
+    
+    // GET https://api.coingecko.com/api/v3/coins/coin
+    
+    // THE START DATA REQUIRED WILL BE IN THERE
+    
+    // SO WILL THE DAILY PRICE CHANGE DATA
+    
     private let token: EthereumToken
+    
+    private var dailyChangePercentage: Double? {
+        didSet {
+            if dailyChangePercentage != nil {
+                let dailyChangeCarrot = dailyChangePercentage! > 0 ? "▲" : "▼"
+                let dailyChangeTextColor = dailyChangePercentage! > 0 ? UIColor(red: 76/255, green: 175/255, blue: 80/255, alpha: 1) : UIColor(red: 255/255, green: 94/255, blue: 86/255, alpha: 1)
+                    
+                let dailyChangeLabelString1 = NSAttributedString(string: "Daily - ", attributes: [NSAttributedString.Key.foregroundColor: UIColor.primaryTextColor])
+                let dailyChangeLabelString2 = NSAttributedString(string: "\(dailyChangeCarrot) \(formatDoubleToTwoDecimalPlaces(value: dailyChangePercentage!))%", attributes: [NSAttributedString.Key.foregroundColor: dailyChangeTextColor])
+                let dailyValueLabelArray = NSMutableAttributedString()
+                dailyValueLabelArray.append(dailyChangeLabelString1)
+                dailyValueLabelArray.append(dailyChangeLabelString2)
+                
+                DispatchQueue.main.async {
+                    UIView.transition(with: self.dailyChangeLabel, duration: 0.15, options: .transitionCrossDissolve) {
+                        self.dailyChangeLabel.attributedText = dailyValueLabelArray
+                    }
+                }
+            }
+        }
+    }
+    
+    private var coinGeckoAssetID: String? {
+        didSet {
+            if coinGeckoAssetID != nil {
+                FetchCoinGeckoDailyAssetChangeSession(delegate: self).getDailyPercentageChange(for: coinGeckoAssetID!)
+            }
+        }
+    }
     
     private lazy var backgroundViewsStackView = UIStackView.makeVerticalStackView(with: [percentageOfWalletBackgroundView, tokenFactsBackgroundView], distribution: .fillEqually, spacing: 24)
     
@@ -83,6 +126,7 @@ class EthereumTokenInformationController: UIViewController {
     
     private let dailyChangeLabel: UILabel = {
         let label = UILabel()
+        label.text = "Daily - N/A"
         label.textColor = .placeholderTextColor
         label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -108,6 +152,7 @@ class EthereumTokenInformationController: UIViewController {
         setupPercentageOfWalletBackgroundView()
         setupTokenFactsBackgroundView()
         setupNavigationBar()
+        fetchAllCoinsFromCoinGecko()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -138,10 +183,6 @@ class EthereumTokenInformationController: UIViewController {
     }
     
     private func setupTokenFactsBackgroundView() {
-        // This wil eventually be replaced by the actual daily change amount once the issue is solved
-        let dailyChangeCarrot = -40 > 0 ? "▲" : "▼"
-        let dailyChangeTextColor = -40 > 0 ? UIColor(red: 76/255, green: 175/255, blue: 80/255, alpha: 1) : UIColor(red: 255/255, green: 94/255, blue: 86/255, alpha: 1)
-            
         coinLogoImageView.image = token.logo
         
         let pricePerTokenLabelString1 = NSAttributedString(string: "Price - ", attributes: [NSAttributedString.Key.foregroundColor: UIColor.primaryTextColor])
@@ -157,13 +198,6 @@ class EthereumTokenInformationController: UIViewController {
         totalUSDValueLabelArray.append(totalUSDValueLabelString1)
         totalUSDValueLabelArray.append(totalUSDValueLabelString2)
         totalUSDValueLabel.attributedText = totalUSDValueLabelArray
-        
-        let dailyChangeLabelString1 = NSAttributedString(string: "Daily - ", attributes: [NSAttributedString.Key.foregroundColor: UIColor.primaryTextColor])
-        let dailyChangeLabelString2 = NSAttributedString(string: "\(dailyChangeCarrot) \(formatDoubleToTwoDecimalPlaces(value: 40))%", attributes: [NSAttributedString.Key.foregroundColor: dailyChangeTextColor])
-        let dailyValueLabelArray = NSMutableAttributedString()
-        dailyValueLabelArray.append(dailyChangeLabelString1)
-        dailyValueLabelArray.append(dailyChangeLabelString2)
-        dailyChangeLabel.attributedText = dailyValueLabelArray
         
         tokenFactsBackgroundView.addSubview(coinLogoImageView)
         tokenFactsBackgroundView.addSubview(labelsStackView)
@@ -204,6 +238,22 @@ class EthereumTokenInformationController: UIViewController {
     private func setupNavigationBar() {
         navigationItem.title = token.ticker
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "chevron.backward"), style: .plain, target: self, action: #selector(dismissThisViewController))
+    }
+    
+    private func fetchAllCoinsFromCoinGecko() {
+        FetchCoinGeckoAssetIDSession(delegate: self).getID(for: token.ticker)
+    }
+    
+    // MARK: - FetchCoinGeckoDailyAssetChangeDelegate
+    
+    func didFetchDailyChangePercentage(amount: Double) {
+        dailyChangePercentage = amount
+    }
+    
+    // MARK: - FetchCoinGeckoCoinIdDelegate
+    
+    func didFetchID(string: String) {
+        coinGeckoAssetID = string
     }
     
     // MARK: - Animations
