@@ -7,7 +7,7 @@
 
 import UIKit
 
-class EthereumTokenInformationController: UIViewController, FetchCoinGeckoCoinIdDelegate, FetchCoinGeckoDailyAssetChangeDelegate {
+class EthereumTokenInformationController: UIViewController, FetchCoinGeckoCoinIdDelegate, FetchCoinGeckoMarketDataDelegate {
     
     // MARK: - Properties
     
@@ -52,6 +52,7 @@ class EthereumTokenInformationController: UIViewController, FetchCoinGeckoCoinId
         didSet {
             if coinGeckoAssetID != nil {
                 FetchCoinGeckoDailyAssetChangeSession(delegate: self).getDailyPercentageChange(for: coinGeckoAssetID!)
+                FetchCoinGeckoChartDataSession(coinID: coinGeckoAssetID!, delegate: self).getChartData()
             }
         }
     }
@@ -248,6 +249,10 @@ class EthereumTokenInformationController: UIViewController, FetchCoinGeckoCoinId
     
     func didFetchDailyChangePercentage(amount: Double) {
         dailyChangePercentage = amount
+    }
+    
+    func didFetchChartData(data: [ChartPoint]) {
+        print(data)
     }
     
     // MARK: - FetchCoinGeckoCoinIdDelegate

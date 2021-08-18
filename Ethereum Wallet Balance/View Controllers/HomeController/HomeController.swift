@@ -6,6 +6,7 @@
 //
 
 // Issues so far
+// Not refreshing the UICollectionView for when logos are still being fetched
 // Memory leaks associated with URLSession
 // Matching the ID's with the correct CoinGecko coin because some have repeated IDs
 // Add Core Data

@@ -7,8 +7,9 @@
 
 import Foundation
 
-protocol FetchCoinGeckoDailyAssetChangeDelegate: AnyObject {
+protocol FetchCoinGeckoMarketDataDelegate: AnyObject {
     
     func didFetchDailyChangePercentage(amount: Double)
+    func didFetchChartData(data: [ChartPoint])
     
 }

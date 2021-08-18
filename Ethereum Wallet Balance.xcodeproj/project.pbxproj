@@ -34,7 +34,9 @@
 		1E7897AF26C7425F0028248F /* ScanAddressQRCodeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7897AE26C7425F0028248F /* ScanAddressQRCodeController.swift */; };
 		1E7897B226C7455C0028248F /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7897B126C7455C0028248F /* UIViewController.swift */; };
 		1EA82AEE26C5BA340057E0C9 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA82AED26C5BA340057E0C9 /* UIColor.swift */; };
-		1EF49EEE26CDBAD900AC41C6 /* FetchCoinGeckoDailyAssetChangeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EF49EED26CDBAD900AC41C6 /* FetchCoinGeckoDailyAssetChangeDelegate.swift */; };
+		1EF49EEE26CDBAD900AC41C6 /* FetchCoinGeckoMarketDataDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EF49EED26CDBAD900AC41C6 /* FetchCoinGeckoMarketDataDelegate.swift */; };
+		1EF49EF126CDC0D300AC41C6 /* FetchCoinGeckoChartDataSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EF49EF026CDC0D300AC41C6 /* FetchCoinGeckoChartDataSession.swift */; };
+		1EF49EF526CDC64C00AC41C6 /* ChartPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EF49EF426CDC64C00AC41C6 /* ChartPoint.swift */; };
 		E7E8263D5DC5327C7E701559 /* Pods_Ethereum_Wallet_Balance.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C669B6513C29F458670D54E2 /* Pods_Ethereum_Wallet_Balance.framework */; };
 /* End PBXBuildFile section */
 
@@ -68,7 +70,9 @@
 		1E7897AE26C7425F0028248F /* ScanAddressQRCodeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanAddressQRCodeController.swift; sourceTree = "<group>"; };
 		1E7897B126C7455C0028248F /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		1EA82AED26C5BA340057E0C9 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
-		1EF49EED26CDBAD900AC41C6 /* FetchCoinGeckoDailyAssetChangeDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchCoinGeckoDailyAssetChangeDelegate.swift; sourceTree = "<group>"; };
+		1EF49EED26CDBAD900AC41C6 /* FetchCoinGeckoMarketDataDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchCoinGeckoMarketDataDelegate.swift; sourceTree = "<group>"; };
+		1EF49EF026CDC0D300AC41C6 /* FetchCoinGeckoChartDataSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchCoinGeckoChartDataSession.swift; sourceTree = "<group>"; };
+		1EF49EF426CDC64C00AC41C6 /* ChartPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartPoint.swift; sourceTree = "<group>"; };
 		C038D8AB7DA2DBC1DE7E18FF /* Pods-Ethereum Wallet Balance.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ethereum Wallet Balance.debug.xcconfig"; path = "Target Support Files/Pods-Ethereum Wallet Balance/Pods-Ethereum Wallet Balance.debug.xcconfig"; sourceTree = "<group>"; };
 		C669B6513C29F458670D54E2 /* Pods_Ethereum_Wallet_Balance.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Ethereum_Wallet_Balance.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD1DBD68F59430625E98C70D /* Pods-Ethereum Wallet Balance.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ethereum Wallet Balance.release.xcconfig"; path = "Target Support Files/Pods-Ethereum Wallet Balance/Pods-Ethereum Wallet Balance.release.xcconfig"; sourceTree = "<group>"; };
@@ -104,7 +108,7 @@
 				1E55917E26C870B000175B60 /* EthereumAddressDelegate.swift */,
 				1E2BF07126C9D0B3003E5376 /* FetchCoinLogoDelegate.swift */,
 				1E1DC14126CDB43700AB6050 /* FetchCoinGeckoCoinIdDelegate.swift */,
-				1EF49EED26CDBAD900AC41C6 /* FetchCoinGeckoDailyAssetChangeDelegate.swift */,
+				1EF49EED26CDBAD900AC41C6 /* FetchCoinGeckoMarketDataDelegate.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -116,6 +120,7 @@
 				1E55917B26C86D2A00175B60 /* FetchCoinLogoSession.swift */,
 				1E1DC13E26CDB35600AB6050 /* FetchCoinGeckoAssetIDSession.swift */,
 				1E1DC14426CDB56800AB6050 /* FetchCoinGeckoDailyAssetChangeSession.swift */,
+				1EF49EF026CDC0D300AC41C6 /* FetchCoinGeckoChartDataSession.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -125,6 +130,7 @@
 			children = (
 				1E1ED60E26C98472005306BF /* EthereumAddress.swift */,
 				1E57834726C83B2C00B0B80C /* EthereumToken.swift */,
+				1EF49EF426CDC64C00AC41C6 /* ChartPoint.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -348,15 +354,17 @@
 				1E1ED60F26C98472005306BF /* EthereumAddress.swift in Sources */,
 				1E1DC14226CDB43700AB6050 /* FetchCoinGeckoCoinIdDelegate.swift in Sources */,
 				1E7897B226C7455C0028248F /* UIViewController.swift in Sources */,
+				1EF49EF126CDC0D300AC41C6 /* FetchCoinGeckoChartDataSession.swift in Sources */,
 				1E6B4E9126C5D88B0077F66D /* UIView.swift in Sources */,
 				1EA82AEE26C5BA340057E0C9 /* UIColor.swift in Sources */,
 				1E74F6FD26CB5D3C00D3518E /* EthereumTokenInformationController.swift in Sources */,
 				1E1DC13F26CDB35600AB6050 /* FetchCoinGeckoAssetIDSession.swift in Sources */,
 				1E738BBA26C5B94F00C1667E /* AppDelegate.swift in Sources */,
 				1E55917C26C86D2A00175B60 /* FetchCoinLogoSession.swift in Sources */,
-				1EF49EEE26CDBAD900AC41C6 /* FetchCoinGeckoDailyAssetChangeDelegate.swift in Sources */,
+				1EF49EEE26CDBAD900AC41C6 /* FetchCoinGeckoMarketDataDelegate.swift in Sources */,
 				1E7897AF26C7425F0028248F /* ScanAddressQRCodeController.swift in Sources */,
 				1E57833B26C81FB900B0B80C /* AddressQRCodeScanDelegate.swift in Sources */,
+				1EF49EF526CDC64C00AC41C6 /* ChartPoint.swift in Sources */,
 				1E2BF06E26C98E52003E5376 /* EthereumAddressHeader.swift in Sources */,
 				1E738BBC26C5B94F00C1667E /* SceneDelegate.swift in Sources */,
 				1E57834826C83B2C00B0B80C /* EthereumToken.swift in Sources */,

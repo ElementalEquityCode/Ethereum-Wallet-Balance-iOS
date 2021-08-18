@@ -9,9 +9,9 @@ import Foundation
 
 class FetchCoinGeckoDailyAssetChangeSession {
     
-    private unowned let delegate: FetchCoinGeckoDailyAssetChangeDelegate
+    private unowned let delegate: FetchCoinGeckoMarketDataDelegate
     
-    init(delegate: FetchCoinGeckoDailyAssetChangeDelegate) {
+    init(delegate: FetchCoinGeckoMarketDataDelegate) {
         self.delegate = delegate
     }
     
