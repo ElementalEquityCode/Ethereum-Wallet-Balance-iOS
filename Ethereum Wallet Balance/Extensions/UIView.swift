@@ -35,7 +35,7 @@ extension UIView {
         }
     }
     
-    static func createBorderView() -> UIView {
+    static func makeBorderView() -> UIView {
         let view = UIView()
         view.backgroundColor = .borderColor
         view.translatesAutoresizingMaskIntoConstraints = false

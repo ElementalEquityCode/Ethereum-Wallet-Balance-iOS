@@ -76,7 +76,7 @@ class EthereumTokenCell: UICollectionViewCell {
         return label
     }()
     
-    private let borderView = UIView.createBorderView()
+    private let borderView = UIView.makeBorderView()
     
     // MARK: - Initialization
     

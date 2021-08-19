@@ -9,7 +9,7 @@ import Foundation
 
 class FetchCoinGeckoChartDataSession {
     
-    private unowned let delegate: FetchCoinGeckoMarketDataDelegate
+    private let delegate: FetchCoinGeckoMarketDataDelegate
     
     private let coinID: String
     
@@ -17,11 +17,20 @@ class FetchCoinGeckoChartDataSession {
         self.coinID = coinID
         self.delegate = delegate
     }
-    
-    private lazy var endPoint = "https://api.coingecko.com/api/v3/coins/\(coinID)/market_chart?vs_currency=usd&days=30&interval=daily"
-    
-    func getChartData() {
-        guard let url = URL(string: endPoint) else { return }
+        
+    func getChartData(for timeFrame: TimeFrame) {
+        var amountOfDays: Int!
+        
+        switch timeFrame {
+        case .daily:
+            amountOfDays = 1
+        case .weekly:
+            amountOfDays = 7
+        case .monthly:
+            amountOfDays = 30
+        }
+        
+        guard let url = URL(string: "https://api.coingecko.com/api/v3/coins/\(coinID.lowercased())/market_chart?vs_currency=usd&days=\(amountOfDays!)&interval=hourly") else { return }
         
         URLSession.shared.dataTask(with: url) { (data, _, error) in
             if let error = error {
@@ -38,8 +47,11 @@ class FetchCoinGeckoChartDataSession {
                                     chartPoints.append(ChartPoint(timestamp: timestamp, value: value))
                                 }
                             }
-                            
-                            self.delegate.didFetchChartData(data: chartPoints)
+                            switch timeFrame {
+                            case .daily: self.delegate.didFetchDailyChartData(data: chartPoints)
+                            case .weekly: self.delegate.didFetchWeeklyChartData(data: chartPoints)
+                            case .monthly: self.delegate.didFetchMonthlyChartData(data: chartPoints)
+                            }
                         }
                     }
                 } catch let error {
@@ -49,4 +61,10 @@ class FetchCoinGeckoChartDataSession {
         }.resume()
     }
     
+}
+
+enum TimeFrame: Int {
+    case daily
+    case weekly
+    case monthly
 }

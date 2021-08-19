@@ -7,5 +7,6 @@ target 'Ethereum Wallet Balance' do
 
   # Pods for Ethereum Wallet Balance
   pod 'SwiftLint'
+  pod 'Charts'
 
 end

@@ -50,7 +50,7 @@ class EthereumAddressHeader: UICollectionViewCell {
         return label
     }()
     
-    private let borderView1 = UIView.createBorderView()
+    private let borderView1 = UIView.makeBorderView()
         
     private let etherBalanceLabel: UILabel = {
         let label = UILabel()
@@ -67,7 +67,7 @@ class EthereumAddressHeader: UICollectionViewCell {
         return label
     }()
     
-    private let borderView2 = UIView.createBorderView()
+    private let borderView2 = UIView.makeBorderView()
         
     private let erc20TokensCountLabel: UILabel = {
         let label = UILabel()
@@ -84,7 +84,7 @@ class EthereumAddressHeader: UICollectionViewCell {
         return label
     }()
 
-    private let borderView3 = UIView.createBorderView()
+    private let borderView3 = UIView.makeBorderView()
     
     private let addressLabel: UILabel = {
         let label = UILabel()

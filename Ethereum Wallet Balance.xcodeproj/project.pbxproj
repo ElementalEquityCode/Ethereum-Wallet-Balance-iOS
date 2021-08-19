@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -15,6 +15,7 @@
 		1E1ED61B26C98991005306BF /* EthereumTokenCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E1ED61A26C98991005306BF /* EthereumTokenCell.swift */; };
 		1E2BF06E26C98E52003E5376 /* EthereumAddressHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E2BF06D26C98E52003E5376 /* EthereumAddressHeader.swift */; };
 		1E2BF07226C9D0B3003E5376 /* FetchCoinLogoDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E2BF07126C9D0B3003E5376 /* FetchCoinLogoDelegate.swift */; };
+		1E4F82A926D0508C00B62ED4 /* UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4F82A826D0508C00B62ED4 /* UIButton.swift */; };
 		1E55917C26C86D2A00175B60 /* FetchCoinLogoSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E55917B26C86D2A00175B60 /* FetchCoinLogoSession.swift */; };
 		1E55917F26C870B000175B60 /* EthereumAddressDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E55917E26C870B000175B60 /* EthereumAddressDelegate.swift */; };
 		1E57833B26C81FB900B0B80C /* AddressQRCodeScanDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E57833A26C81FB900B0B80C /* AddressQRCodeScanDelegate.swift */; };
@@ -49,6 +50,7 @@
 		1E1ED61A26C98991005306BF /* EthereumTokenCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EthereumTokenCell.swift; sourceTree = "<group>"; };
 		1E2BF06D26C98E52003E5376 /* EthereumAddressHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EthereumAddressHeader.swift; sourceTree = "<group>"; };
 		1E2BF07126C9D0B3003E5376 /* FetchCoinLogoDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchCoinLogoDelegate.swift; sourceTree = "<group>"; };
+		1E4F82A826D0508C00B62ED4 /* UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButton.swift; sourceTree = "<group>"; };
 		1E55917B26C86D2A00175B60 /* FetchCoinLogoSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchCoinLogoSession.swift; sourceTree = "<group>"; };
 		1E55917E26C870B000175B60 /* EthereumAddressDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EthereumAddressDelegate.swift; sourceTree = "<group>"; };
 		1E57833A26C81FB900B0B80C /* AddressQRCodeScanDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressQRCodeScanDelegate.swift; sourceTree = "<group>"; };
@@ -202,10 +204,11 @@
 			isa = PBXGroup;
 			children = (
 				1E57834326C8250700B0B80C /* UIActivityIndicatorView.swift */,
-				1E7897B126C7455C0028248F /* UIViewController.swift */,
+				1E4F82A826D0508C00B62ED4 /* UIButton.swift */,
 				1EA82AED26C5BA340057E0C9 /* UIColor.swift */,
 				1E6B4E8D26C5D8070077F66D /* UIStackView.swift */,
 				1E6B4E9026C5D88B0077F66D /* UIView.swift */,
+				1E7897B126C7455C0028248F /* UIViewController.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -239,6 +242,7 @@
 				1E738BB226C5B94F00C1667E /* Sources */,
 				1E738BB326C5B94F00C1667E /* Frameworks */,
 				1E738BB426C5B94F00C1667E /* Resources */,
+				F48385287DA0A9D1A9400BFE /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -334,6 +338,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		F48385287DA0A9D1A9400BFE /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Ethereum Wallet Balance/Pods-Ethereum Wallet Balance-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Ethereum Wallet Balance/Pods-Ethereum Wallet Balance-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Ethereum Wallet Balance/Pods-Ethereum Wallet Balance-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -350,6 +371,7 @@
 				1E57834026C822D000B0B80C /* SearchForAddressSession.swift in Sources */,
 				1E6B4E9626C5DC700077F66D /* Helpers.swift in Sources */,
 				1E57834426C8250700B0B80C /* UIActivityIndicatorView.swift in Sources */,
+				1E4F82A926D0508C00B62ED4 /* UIButton.swift in Sources */,
 				1E1ED61726C98917005306BF /* HomeController + UICollectionView.swift in Sources */,
 				1E1ED60F26C98472005306BF /* EthereumAddress.swift in Sources */,
 				1E1DC14226CDB43700AB6050 /* FetchCoinGeckoCoinIdDelegate.swift in Sources */,

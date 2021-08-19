@@ -10,6 +10,8 @@ import Foundation
 protocol FetchCoinGeckoMarketDataDelegate: AnyObject {
     
     func didFetchDailyChangePercentage(amount: Double)
-    func didFetchChartData(data: [ChartPoint])
+    func didFetchDailyChartData(data: [ChartPoint])
+    func didFetchWeeklyChartData(data: [ChartPoint])
+    func didFetchMonthlyChartData(data: [ChartPoint])
     
 }
