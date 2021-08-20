@@ -20,6 +20,7 @@ class EthereumTokenInformationController: UIViewController, FetchCoinGeckoCoinId
     
     private var chartTimeFrame: ChartTimeFrame = .monthly {
         didSet {
+            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
             
             let line = LineChartData()
             
@@ -89,7 +90,6 @@ class EthereumTokenInformationController: UIViewController, FetchCoinGeckoCoinId
     
     private lazy var lineChartBackgroundView: UIView = {
         let lineChartBackgroundView = UIView()
-        lineChartBackgroundView.layer.masksToBounds = true
         lineChartBackgroundView.layer.shadowColor = UIColor.black.cgColor
         lineChartBackgroundView.layer.shadowOpacity = traitCollection.userInterfaceStyle == .dark ? 0.4 : 0.12
         lineChartBackgroundView.layer.shadowOffset = CGSize(width: 1, height: 2)
@@ -139,7 +139,7 @@ class EthereumTokenInformationController: UIViewController, FetchCoinGeckoCoinId
         let borderView = UIView.makeBorderView()
         lineChart.addSubview(borderView)
         
-        borderView.anchor(topAnchor: nil, trailingAnchor: lineChart.trailingAnchor, bottomAnchor: lineChart.bottomAnchor, leadingAnchor: lineChart.leadingAnchor, topPadding: 0, trailingPadding: 0, bottomPadding: 0, leadingPadding: 0, height: 0, width: 0)
+        borderView.anchor(topAnchor: nil, trailingAnchor: lineChart.trailingAnchor, bottomAnchor: lineChart.bottomAnchor, leadingAnchor: lineChart.leadingAnchor, topPadding: 0, trailingPadding: 10, bottomPadding: 0, leadingPadding: 10, height: 0, width: 0)
         
         return lineChart
     }()
@@ -407,9 +407,10 @@ class EthereumTokenInformationController: UIViewController, FetchCoinGeckoCoinId
         
         DispatchQueue.main.async {
             self.dailyLineChartDataSet = LineChartDataSet(entries: dataSet)
+            self.dailyLineChartDataSet.mode = .cubicBezier
             
             self.dailyLineChartDataSet.drawHorizontalHighlightIndicatorEnabled = false
-            self.dailyLineChartDataSet.highlightColor = .clear
+            self.dailyLineChartDataSet.highlightColor = self.traitCollection.userInterfaceStyle == .light ? UIColor.black : UIColor.white
             
             let gradient = CGGradient(colorsSpace: CGColorSpaceCreateDeviceRGB(), colors: [UIColor.primaryColor.cgColor, UIColor.clear.cgColor] as CFArray, locations: [1, 0])
             
@@ -438,9 +439,10 @@ class EthereumTokenInformationController: UIViewController, FetchCoinGeckoCoinId
         
         DispatchQueue.main.async {
             self.weeklyLineChartDataSet = LineChartDataSet(entries: dataSet)
+            self.weeklyLineChartDataSet.mode = .cubicBezier
             
             self.weeklyLineChartDataSet.drawHorizontalHighlightIndicatorEnabled = false
-            self.weeklyLineChartDataSet.highlightColor = .clear
+            self.weeklyLineChartDataSet.highlightColor = self.traitCollection.userInterfaceStyle == .light ? UIColor.black : UIColor.white
             
             let gradient = CGGradient(colorsSpace: CGColorSpaceCreateDeviceRGB(), colors: [UIColor.primaryColor.cgColor, UIColor.clear.cgColor] as CFArray, locations: [1, 0])
             
@@ -469,9 +471,10 @@ class EthereumTokenInformationController: UIViewController, FetchCoinGeckoCoinId
         
         DispatchQueue.main.async {
             self.monthlyLineChartDataSet = LineChartDataSet(entries: dataSet)
+            self.monthlyLineChartDataSet.mode = .cubicBezier
             
             self.monthlyLineChartDataSet.drawHorizontalHighlightIndicatorEnabled = false
-            self.monthlyLineChartDataSet.highlightColor = .clear
+            self.monthlyLineChartDataSet.highlightColor = self.traitCollection.userInterfaceStyle == .light ? UIColor.black : UIColor.white
             
             let gradient = CGGradient(colorsSpace: CGColorSpaceCreateDeviceRGB(), colors: [UIColor.primaryColor.cgColor, UIColor.clear.cgColor] as CFArray, locations: [1, 0])
             
@@ -537,6 +540,9 @@ class EthereumTokenInformationController: UIViewController, FetchCoinGeckoCoinId
         
         if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
             traitCollection.performAsCurrent {
+                self.dailyLineChartDataSet.highlightColor = self.traitCollection.userInterfaceStyle == .light ? UIColor.black : UIColor.white
+                self.weeklyLineChartDataSet.highlightColor = self.traitCollection.userInterfaceStyle == .light ? UIColor.black : UIColor.white
+                self.monthlyLineChartDataSet.highlightColor = self.traitCollection.userInterfaceStyle == .light ? UIColor.black : UIColor.white
                 self.lineChartBackgroundView.layer.shadowOpacity = traitCollection.userInterfaceStyle == .dark ? 0.4 : 0.12
                 self.percentageOfWalletBackgroundView.layer.shadowOpacity = traitCollection.userInterfaceStyle == .dark ? 0.4 : 0.12
                 self.tokenFactsBackgroundView.layer.shadowOpacity = traitCollection.userInterfaceStyle == .dark ? 0.4 : 0.12
