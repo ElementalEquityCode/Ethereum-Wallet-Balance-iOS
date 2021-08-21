@@ -21,31 +21,29 @@ class EthereumTokenInformationController: UIViewController, FetchCoinGeckoCoinId
     private var chartTimeFrame: ChartTimeFrame = .monthly {
         didSet {
             UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-            
-            let line = LineChartData()
-            
+                        
             switch chartTimeFrame {
             case .daily:
                 dayButton.setTitleColor(.primaryColor, for: .normal)
                 weekButton.setTitleColor(.placeholderTextColor, for: .normal)
                 monthButton.setTitleColor(.placeholderTextColor, for: .normal)
                 
-                line.addDataSet(dailyLineChartDataSet)
-                lineChart.data = line
+                performLineDataAnimation(with: dailyLineChartDataSet)
+                dailyLineChartDataSet.drawVerticalHighlightIndicatorEnabled = false
             case .weekly:
                 dayButton.setTitleColor(.placeholderTextColor, for: .normal)
                 weekButton.setTitleColor(.primaryColor, for: .normal)
                 monthButton.setTitleColor(.placeholderTextColor, for: .normal)
                 
-                line.addDataSet(weeklyLineChartDataSet)
-                lineChart.data = line
+                performLineDataAnimation(with: weeklyLineChartDataSet)
+                weeklyLineChartDataSet.drawVerticalHighlightIndicatorEnabled = false
             case .monthly:
                 dayButton.setTitleColor(.placeholderTextColor, for: .normal)
                 weekButton.setTitleColor(.placeholderTextColor, for: .normal)
                 monthButton.setTitleColor(.primaryColor, for: .normal)
                 
-                line.addDataSet(monthlyLineChartDataSet)
-                lineChart.data = line
+                performLineDataAnimation(with: monthlyLineChartDataSet)
+                monthlyLineChartDataSet.drawVerticalHighlightIndicatorEnabled = false
             }
         }
     }
@@ -277,6 +275,12 @@ class EthereumTokenInformationController: UIViewController, FetchCoinGeckoCoinId
     
     private func setupDelegates() {
         lineChart.delegate = self
+        
+        lineChart.gestureRecognizers?.forEach({ (gesture) in
+            if let panGestureRecognizer = gesture as? UIPanGestureRecognizer {
+                panGestureRecognizer.addTarget(self, action: #selector(handlePanGestureRecognizerRelease))
+            }
+        })
     }
     
     private func setupPercentageOfWalletBackgroundView() {
@@ -492,10 +496,7 @@ class EthereumTokenInformationController: UIViewController, FetchCoinGeckoCoinId
             
             self.monthlyLineChartDataSet.colors = [UIColor.primaryColor]
             
-            let line = LineChartData()
-            line.addDataSet(self.monthlyLineChartDataSet)
-            
-            self.lineChart.data = line
+            self.performLineDataAnimation(with: self.monthlyLineChartDataSet)
         }
     }
     
@@ -504,7 +505,7 @@ class EthereumTokenInformationController: UIViewController, FetchCoinGeckoCoinId
     func didFetchID(string: String) {
         coinGeckoAssetID = string
     }
-    
+        
     // MARK: - ChartViewDelegate
     
     func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
@@ -531,6 +532,14 @@ class EthereumTokenInformationController: UIViewController, FetchCoinGeckoCoinId
         animation.fillMode = .forwards
         animation.isRemovedOnCompletion = false
         percentageOfPortfolioCircleLayer.add(animation, forKey: nil)
+    }
+    
+    private func performLineDataAnimation(with data: LineChartDataSet) {
+        let chartData = LineChartData(dataSet: data)
+        
+        UIView.transition(with: lineChart, duration: 0.3, options: .transitionCrossDissolve) {
+            self.lineChart.data = chartData
+        }
     }
     
     // MARK: - TraitCollection
@@ -577,6 +586,14 @@ class EthereumTokenInformationController: UIViewController, FetchCoinGeckoCoinId
     }
     
     // MARK: - Selectors
+    
+    @objc private func handlePanGestureRecognizerRelease(gesture: UIPanGestureRecognizer) {
+        if gesture.state == .began {
+            monthlyLineChartDataSet.drawVerticalHighlightIndicatorEnabled = true
+            weeklyLineChartDataSet.drawVerticalHighlightIndicatorEnabled = true
+            dailyLineChartDataSet.drawVerticalHighlightIndicatorEnabled = true
+        }
+    }
     
     @objc private func dismissThisViewController() {
         dismiss(animated: true, completion: nil)
