@@ -141,6 +141,8 @@ class EthereumTokenInformationController: UIViewController, FetchCoinGeckoCoinId
         
         return lineChart
     }()
+    
+    private var currentlySelectedData: LineChartDataSet!
         
     private var dailyLineChartDataSet = LineChartDataSet()
     
@@ -535,6 +537,7 @@ class EthereumTokenInformationController: UIViewController, FetchCoinGeckoCoinId
     }
     
     private func performLineDataAnimation(with data: LineChartDataSet) {
+        currentlySelectedData = data
         let chartData = LineChartData(dataSet: data)
         
         UIView.transition(with: lineChart, duration: 0.3, options: .transitionCrossDissolve) {
@@ -589,11 +592,11 @@ class EthereumTokenInformationController: UIViewController, FetchCoinGeckoCoinId
     
     @objc private func handlePanGestureRecognizerRelease(gesture: UIPanGestureRecognizer) {
         if gesture.state == .began {
-            monthlyLineChartDataSet.drawVerticalHighlightIndicatorEnabled = true
-            weeklyLineChartDataSet.drawVerticalHighlightIndicatorEnabled = true
-            dailyLineChartDataSet.drawVerticalHighlightIndicatorEnabled = true
+            currentlySelectedData.drawVerticalHighlightIndicatorEnabled = true
         } else if gesture.state == .ended {
             setTextForSelectedPriceLabel(value: token.price)
+            currentlySelectedData.drawVerticalHighlightIndicatorEnabled = false
+            performLineDataAnimation(with: currentlySelectedData)
         }
     }
     
