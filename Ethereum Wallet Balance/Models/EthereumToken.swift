@@ -7,7 +7,7 @@
 
 import UIKit
 
-class EthereumToken: Codable, FetchCoinLogoDelegate {
+class EthereumToken: Codable {
     
     // MARK: - Properties
     
@@ -40,7 +40,6 @@ class EthereumToken: Codable, FetchCoinLogoDelegate {
         self.usdBalance = usdBalance
         self.logoUrl = logoUrl
         self.percentOfTotalPortfolio = percentOfTotalPortfolio
-        FetchCoinLogoSession(coin: self, delegate: self).getLogoImage()
     }
     
     required init(from decoder: Decoder) throws {
@@ -51,13 +50,6 @@ class EthereumToken: Codable, FetchCoinLogoDelegate {
         self.coinBalance = try container.decode(Double.self, forKey: CodingKeys.coinBalance)
         self.usdBalance = try container.decode(Double.self, forKey: CodingKeys.usdBalance)
         self.logoUrl = try container.decode(String.self, forKey: CodingKeys.logoUrl)
-        FetchCoinLogoSession(coin: self, delegate: self).getLogoImage()
-    }
-        
-    // MARK: - FetchCoinLogoDelegate
-    
-    func didFetchLogo(image: UIImage?) {
-        self.logo = image
     }
     
 }

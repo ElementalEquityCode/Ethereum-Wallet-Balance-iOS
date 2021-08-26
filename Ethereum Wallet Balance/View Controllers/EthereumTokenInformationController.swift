@@ -592,8 +592,10 @@ class EthereumTokenInformationController: UIViewController, FetchCoinGeckoCoinId
     
     @objc private func handlePanGestureRecognizerRelease(gesture: UIPanGestureRecognizer) {
         if gesture.state == .began {
+            UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
             currentlySelectedData.drawVerticalHighlightIndicatorEnabled = true
         } else if gesture.state == .ended {
+            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
             setTextForSelectedPriceLabel(value: token.price)
             currentlySelectedData.drawVerticalHighlightIndicatorEnabled = false
             performLineDataAnimation(with: currentlySelectedData)

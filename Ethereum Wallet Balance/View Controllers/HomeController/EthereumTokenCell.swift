@@ -7,7 +7,7 @@
 
 import UIKit
 
-class EthereumTokenCell: UICollectionViewCell {
+class EthereumTokenCell: UICollectionViewCell, FetchCoinLogoDelegate {
     
     // MARK: - Properties
         
@@ -15,7 +15,11 @@ class EthereumTokenCell: UICollectionViewCell {
         didSet {
             if let coin = self.coin {
                 if let image = coin.logo {
+                    print("Has a coin logo")
                     coinLogoImageView.image = image
+                } else {
+                    print("Is fetching a coin logo")
+                    FetchCoinLogoSession(coin: coin, delegate: self).getLogoImage()
                 }
                 
                 let attributedString1 = NSAttributedString(string: "\(formatDoubleToTwoDecimalPlaces(value: coin.coinBalance)) ", attributes: [NSAttributedString.Key.foregroundColor: UIColor(red: 76/255, green: 175/255, blue: 80/255, alpha: 1), NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12.5, weight: .medium)])
@@ -135,6 +139,19 @@ class EthereumTokenCell: UICollectionViewCell {
     func setupBorderView() {
         addSubview(borderView)
         borderView.anchor(topAnchor: nil, trailingAnchor: trailingAnchor, bottomAnchor: bottomAnchor, leadingAnchor: leadingAnchor, topPadding: 0, trailingPadding: 0, bottomPadding: 0, leadingPadding: 0, height: 0, width: 0)
+    }
+    
+    // MARK: - FetchCoinLogoDelegate
+    
+    func didFetchLogo(image: UIImage?) {
+        if let image = image {
+            if let coin = coin {
+                coin.logo = image
+            }
+            DispatchQueue.main.async {
+                self.coinLogoImageView.image = image
+            }
+        }
     }
     
 }
