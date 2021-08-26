@@ -592,6 +592,8 @@ class EthereumTokenInformationController: UIViewController, FetchCoinGeckoCoinId
             monthlyLineChartDataSet.drawVerticalHighlightIndicatorEnabled = true
             weeklyLineChartDataSet.drawVerticalHighlightIndicatorEnabled = true
             dailyLineChartDataSet.drawVerticalHighlightIndicatorEnabled = true
+        } else if gesture.state == .ended {
+            setTextForSelectedPriceLabel(value: token.price)
         }
     }
     
