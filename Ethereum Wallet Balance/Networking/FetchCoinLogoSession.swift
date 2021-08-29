@@ -21,7 +21,9 @@ class FetchCoinLogoSession {
     func getLogoImage() {
         guard let url = URL(string: assetUrl) else { return }
         
-        URLSession.shared.dataTask(with: url) { (data, response, error) in
+        let session = URLSession(configuration: .ephemeral)
+        
+        session.dataTask(with: url) { (data, response, error) in
             if let error = error {
                 print(error.localizedDescription)
             } else {
@@ -38,6 +40,8 @@ class FetchCoinLogoSession {
                 }
             }
         }.resume()
+        
+        session.finishTasksAndInvalidate()
     }
     
 }
