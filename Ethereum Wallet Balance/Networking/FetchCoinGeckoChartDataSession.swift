@@ -9,7 +9,7 @@ import Foundation
 
 class FetchCoinGeckoChartDataSession {
     
-    private let delegate: FetchCoinGeckoMarketDataDelegate
+    private unowned let delegate: FetchCoinGeckoMarketDataDelegate
     
     private let coinID: String
     
@@ -32,7 +32,9 @@ class FetchCoinGeckoChartDataSession {
         
         guard let url = URL(string: "https://api.coingecko.com/api/v3/coins/\(coinID.lowercased())/market_chart?vs_currency=usd&days=\(amountOfDays!)&interval=hourly") else { return }
         
-        URLSession.shared.dataTask(with: url) { (data, _, error) in
+        let session = URLSession(configuration: .ephemeral)
+        
+        session.dataTask(with: url) { (data, _, error) in
             if let error = error {
                 print(error.localizedDescription)
             } else {
@@ -59,6 +61,8 @@ class FetchCoinGeckoChartDataSession {
                 }
             }
         }.resume()
+        
+        session.finishTasksAndInvalidate()
     }
     
 }

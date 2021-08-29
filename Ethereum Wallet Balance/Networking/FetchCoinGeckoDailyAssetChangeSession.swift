@@ -9,7 +9,7 @@ import Foundation
 
 class FetchCoinGeckoDailyAssetChangeSession {
     
-    private let delegate: FetchCoinGeckoMarketDataDelegate
+    private unowned let delegate: FetchCoinGeckoMarketDataDelegate
     
     init(delegate: FetchCoinGeckoMarketDataDelegate) {
         self.delegate = delegate
@@ -20,7 +20,9 @@ class FetchCoinGeckoDailyAssetChangeSession {
     func getDailyPercentageChange(for coin: String) {
         guard let url = URL(string: endPoint + "/\(coin)") else { return }
         
-        URLSession.shared.dataTask(with: url) { (data, _, error) in
+        let session = URLSession(configuration: .ephemeral)
+        
+        session.dataTask(with: url) { (data, _, error) in
             if let error = error {
                 print(error.localizedDescription)
             } else {
@@ -37,6 +39,9 @@ class FetchCoinGeckoDailyAssetChangeSession {
                 }
             }
         }.resume()
+        
+        session.finishTasksAndInvalidate()
+        
     }
     
 }

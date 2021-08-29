@@ -18,7 +18,9 @@ class FetchCoinGeckoAssetIDSession {
     func getID(for ticker: String) {
         guard let url = URL(string: "https://api.coingecko.com/api/v3/coins/list") else { return }
         
-        URLSession.shared.dataTask(with: url) { (data, _, error) in
+        let session = URLSession(configuration: .ephemeral)
+        
+        session.dataTask(with: url) { (data, _, error) in
             if let error = error {
                 print(error.localizedDescription)
             } else {
@@ -42,6 +44,8 @@ class FetchCoinGeckoAssetIDSession {
                 }
             }
         }.resume()
+        
+        session.finishTasksAndInvalidate()
     }
     
 }
