@@ -25,7 +25,9 @@ class SearchForAddressSession {
     func getCoinBalances(completion: @escaping () -> Void) {
         guard let url = URL(string: endPoint) else { return }
         
-        URLSession.shared.dataTask(with: url) { (data, response, error) in
+        let session = URLSession(configuration: .ephemeral)
+        
+        session.dataTask(with: url) { (data, response, error) in
             if let error = error {
                 print(error.localizedDescription)
                 completion()
@@ -40,6 +42,8 @@ class SearchForAddressSession {
                 }
             }
         }.resume()
+        
+        session.finishTasksAndInvalidate()
     }
     
     private func getTokensFromAddress(data: Data?, completion: @escaping () -> Void) {

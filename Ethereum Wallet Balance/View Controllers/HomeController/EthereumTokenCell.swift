@@ -15,11 +15,9 @@ class EthereumTokenCell: UICollectionViewCell, FetchCoinLogoDelegate {
         didSet {
             if let coin = self.coin {
                 if let image = coin.logo {
-                    print("Has a coin logo")
-                    coinLogoImageView.image = image
+                    // coinLogoImageView.image = image
                 } else {
-                    print("Is fetching a coin logo")
-                    FetchCoinLogoSession(coin: coin, delegate: self).getLogoImage()
+                    // FetchCoinLogoSession(coin: coin, delegate: self).getLogoImage()
                 }
                 
                 let attributedString1 = NSAttributedString(string: "\(formatDoubleToTwoDecimalPlaces(value: coin.coinBalance)) ", attributes: [NSAttributedString.Key.foregroundColor: UIColor(red: 76/255, green: 175/255, blue: 80/255, alpha: 1), NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12.5, weight: .medium)])
