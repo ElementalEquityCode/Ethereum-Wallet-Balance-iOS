@@ -9,13 +9,14 @@ import Foundation
 
 class FetchCoinGeckoChartDataSession {
     
-    private unowned let delegate: FetchCoinGeckoMarketDataDelegate
+    weak var delegate: FetchCoinGeckoMarketDataDelegate?
+    
+    let session = URLSession(configuration: .ephemeral)
     
     private let coinID: String
     
-    init(coinID: String, delegate: FetchCoinGeckoMarketDataDelegate) {
+    init(coinID: String) {
         self.coinID = coinID
-        self.delegate = delegate
     }
         
     func getChartData(for timeFrame: TimeFrame) {
@@ -31,12 +32,10 @@ class FetchCoinGeckoChartDataSession {
         }
         
         guard let url = URL(string: "https://api.coingecko.com/api/v3/coins/\(coinID.lowercased())/market_chart?vs_currency=usd&days=\(amountOfDays!)&interval=hourly") else { return }
-        
-        let session = URLSession(configuration: .ephemeral)
-        
+                
         session.dataTask(with: url) { (data, _, error) in
             if let error = error {
-                print(error.localizedDescription)
+                print("FetchCoinGeckoChartDataSession: \(error.localizedDescription)")
             } else {
                 do {
                     if let json = try JSONSerialization.jsonObject(with: data!) as? [String: Any] {
@@ -50,14 +49,14 @@ class FetchCoinGeckoChartDataSession {
                                 }
                             }
                             switch timeFrame {
-                            case .daily: self.delegate.didFetchDailyChartData(data: chartPoints)
-                            case .weekly: self.delegate.didFetchWeeklyChartData(data: chartPoints)
-                            case .monthly: self.delegate.didFetchMonthlyChartData(data: chartPoints)
+                            case .daily: self.delegate?.didFetchDailyChartData(data: chartPoints)
+                            case .weekly: self.delegate?.didFetchWeeklyChartData(data: chartPoints)
+                            case .monthly: self.delegate?.didFetchMonthlyChartData(data: chartPoints)
                             }
                         }
                     }
                 } catch let error {
-                    print(error.localizedDescription)
+                    print("FetchCoinGeckoChartDataSession JSONDecoder: \(error.localizedDescription)")
                 }
             }
         }.resume()

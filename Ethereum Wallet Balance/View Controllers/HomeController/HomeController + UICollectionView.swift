@@ -80,6 +80,7 @@ extension HomeController: UICollectionViewDataSource, UICollectionViewDelegate, 
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let cell = ethereumAddressCollectionView.cellForItem(at: indexPath) as? EthereumTokenCell {
+            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
             if let token = cell.coin {
                 let navigationController = UINavigationController(rootViewController: EthereumTokenInformationController(token: token))
                 navigationController.modalPresentationStyle = .fullScreen

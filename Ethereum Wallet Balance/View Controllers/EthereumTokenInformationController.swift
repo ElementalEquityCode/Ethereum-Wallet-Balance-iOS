@@ -18,6 +18,12 @@ class EthereumTokenInformationController: UIViewController, FetchCoinGeckoCoinId
     
     // MARK: - Properties
     
+    private var fetchCoinGeckoAssetIDSession: FetchCoinGeckoAssetIDSession?
+    
+    private var fetchCoinGeckoAssetChangeSession: FetchCoinGeckoDailyAssetChangeSession?
+    
+    private var fetchCoinGeckoChartDataSession: FetchCoinGeckoChartDataSession?
+
     private var chartTimeFrame: ChartTimeFrame = .monthly {
         didSet {
             UIImpactFeedbackGenerator(style: .medium).impactOccurred()
@@ -74,12 +80,17 @@ class EthereumTokenInformationController: UIViewController, FetchCoinGeckoCoinId
     private var coinGeckoAssetID: String? {
         didSet {
             if coinGeckoAssetID != nil {
-                FetchCoinGeckoDailyAssetChangeSession(delegate: self).getDailyPercentageChange(for: coinGeckoAssetID!)
+                fetchCoinGeckoAssetChangeSession = FetchCoinGeckoDailyAssetChangeSession()
+                fetchCoinGeckoAssetChangeSession!.delegate = self
                 
-                let chartDataSession = FetchCoinGeckoChartDataSession(coinID: coinGeckoAssetID!, delegate: self)
-                chartDataSession.getChartData(for: .daily)
-                chartDataSession.getChartData(for: .weekly)
-                chartDataSession.getChartData(for: .monthly)
+                fetchCoinGeckoAssetChangeSession!.getDailyPercentageChange(for: coinGeckoAssetID!)
+                
+                fetchCoinGeckoChartDataSession = FetchCoinGeckoChartDataSession(coinID: coinGeckoAssetID!)
+                fetchCoinGeckoChartDataSession!.delegate = self
+                
+                fetchCoinGeckoChartDataSession!.getChartData(for: .daily)
+                fetchCoinGeckoChartDataSession!.getChartData(for: .weekly)
+                fetchCoinGeckoChartDataSession!.getChartData(for: .monthly)
             }
         }
     }
@@ -246,6 +257,24 @@ class EthereumTokenInformationController: UIViewController, FetchCoinGeckoCoinId
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Deinitialization
+    
+    deinit {
+        print("Deinitializaing EthereumTokenInformationController")
+        
+        if let fetchCoinGeckoAssetIDSession = self.fetchCoinGeckoAssetIDSession {
+            fetchCoinGeckoAssetIDSession.session.invalidateAndCancel()
+        }
+        
+        if let fetchCoinGeckoAssetChangeSession = self.fetchCoinGeckoAssetChangeSession {
+            fetchCoinGeckoAssetChangeSession.session.invalidateAndCancel()
+        }
+        
+        if let fetchCoinGeckoChartDataSession = self.fetchCoinGeckoChartDataSession {
+            fetchCoinGeckoChartDataSession.session.invalidateAndCancel()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -381,7 +410,9 @@ class EthereumTokenInformationController: UIViewController, FetchCoinGeckoCoinId
     }
     
     private func fetchAllCoinsFromCoinGecko() {
-        FetchCoinGeckoAssetIDSession(delegate: self).getID(for: token.ticker)
+        fetchCoinGeckoAssetIDSession = FetchCoinGeckoAssetIDSession()
+        fetchCoinGeckoAssetIDSession!.delegate = self
+        fetchCoinGeckoAssetIDSession!.getID(for: token.ticker)
     }
     
     // MARK: - Selectors

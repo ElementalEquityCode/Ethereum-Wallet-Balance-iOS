@@ -152,6 +152,8 @@ class HomeController: UIViewController, UITextFieldDelegate, AddressQRCodeScanDe
     }
     
     @objc func handleEthereumAddressHeaderTap(gesture: UITapGestureRecognizer) {
+        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+        
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         alertController.addAction(UIAlertAction(title: "Delete Address", style: .destructive, handler: { (_) in
             if let sectionToDeleteAsString = gesture.name {

@@ -9,20 +9,16 @@ import Foundation
 
 class FetchCoinGeckoAssetIDSession {
     
-    private unowned let delegate: FetchCoinGeckoCoinIdDelegate
+    weak var delegate: FetchCoinGeckoCoinIdDelegate?
     
-    init(delegate: FetchCoinGeckoCoinIdDelegate) {
-        self.delegate = delegate
-    }
+    let session = URLSession(configuration: .ephemeral)
     
     func getID(for ticker: String) {
         guard let url = URL(string: "https://api.coingecko.com/api/v3/coins/list") else { return }
-        
-        let session = URLSession(configuration: .ephemeral)
-        
+                
         session.dataTask(with: url) { (data, _, error) in
             if let error = error {
-                print(error.localizedDescription)
+                print("FetchCoinGeckoAssetIDSession: \(error.localizedDescription)")
             } else {
                 do {
                     if let json = try JSONSerialization.jsonObject(with: data!) as? NSArray {
@@ -31,7 +27,7 @@ class FetchCoinGeckoAssetIDSession {
                                 if let coinSymbol = coinJSON["symbol"] as? String {
                                     if coinSymbol == ticker.lowercased() {
                                         if let coinID = coinJSON["id"] as? String {
-                                            self.delegate.didFetchID(string: coinID)
+                                            self.delegate?.didFetchID(string: coinID)
                                             return
                                         }
                                     }
@@ -40,7 +36,7 @@ class FetchCoinGeckoAssetIDSession {
                         }
                     }
                 } catch let error {
-                    print(error.localizedDescription)
+                    print("FetchCoinGeckoAssetIDSession JSONDecoder: \(error.localizedDescription)")
                 }
             }
         }.resume()

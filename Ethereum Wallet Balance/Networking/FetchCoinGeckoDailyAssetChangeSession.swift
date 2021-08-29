@@ -9,33 +9,29 @@ import Foundation
 
 class FetchCoinGeckoDailyAssetChangeSession {
     
-    private unowned let delegate: FetchCoinGeckoMarketDataDelegate
+    weak var delegate: FetchCoinGeckoMarketDataDelegate?
     
-    init(delegate: FetchCoinGeckoMarketDataDelegate) {
-        self.delegate = delegate
-    }
+    let session = URLSession(configuration: .ephemeral)
     
     private lazy var endPoint = "https://api.coingecko.com/api/v3/coins/"
     
     func getDailyPercentageChange(for coin: String) {
         guard let url = URL(string: endPoint + "/\(coin)") else { return }
-        
-        let session = URLSession(configuration: .ephemeral)
-        
+                
         session.dataTask(with: url) { (data, _, error) in
             if let error = error {
-                print(error.localizedDescription)
+                print("FetchCoinGeckoDailyAssetChangeSession: \(error.localizedDescription)")
             } else {
                 do {
                     if let json = try JSONSerialization.jsonObject(with: data!) as? [String: Any] {
                         if let marketData = json["market_data"] as? [String: Any] {
                             if let dailyChangePercentage = marketData["price_change_percentage_24h"] as? Double {
-                                self.delegate.didFetchDailyChangePercentage(amount: dailyChangePercentage)
+                                self.delegate?.didFetchDailyChangePercentage(amount: dailyChangePercentage)
                             }
                         }
                     }
                 } catch let error {
-                    print(error.localizedDescription)
+                    print("FetchCoinGeckoDailyAssetChangeSession JSONDecoder: \(error.localizedDescription)")
                 }
             }
         }.resume()
