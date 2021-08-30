@@ -17,3 +17,13 @@ func formatDoubleToTwoDecimalPlaces(value: Double) -> String {
     numberFormatter.minimumFractionDigits = 2
     return numberFormatter.string(from: NSNumber(value: value)) ?? ""
 }
+
+func checkForCoinGeckoRateLimitError(data: Data?) {
+    if let data = data {
+        if let string = String(data: data, encoding: .utf8) {
+            if string.contains("has banned you temporarily from accessing this website") {
+                NotificationCenter.default.post(Notification.init(name: Notification.Name("apiCallLimitError")))
+            }
+        }
+    }
+}

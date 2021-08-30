@@ -36,6 +36,7 @@ class FetchCoinGeckoAssetIDSession {
                         }
                     }
                 } catch let error {
+                    checkForCoinGeckoRateLimitError(data: data)
                     print("FetchCoinGeckoAssetIDSession JSONDecoder: \(error.localizedDescription)")
                 }
             }

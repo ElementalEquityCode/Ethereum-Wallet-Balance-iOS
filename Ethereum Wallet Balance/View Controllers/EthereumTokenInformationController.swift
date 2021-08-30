@@ -282,6 +282,7 @@ class EthereumTokenInformationController: UIViewController, FetchCoinGeckoCoinId
         setupSubviews()
         setupDelegates()
         setupTargets()
+        setupNotificationManager()
         setupPercentageOfWalletBackgroundView()
         setupTokenFactsBackgroundView()
         setupLineChartBackgroundView()
@@ -330,6 +331,10 @@ class EthereumTokenInformationController: UIViewController, FetchCoinGeckoCoinId
         dayButton.addTarget(self, action: #selector(handleDayButtonTapped), for: .touchUpInside)
         weekButton.addTarget(self, action: #selector(handleWeekButtonTapped), for: .touchUpInside)
         monthButton.addTarget(self, action: #selector(handleMonthButtonTapped), for: .touchUpInside)
+    }
+    
+    private func setupNotificationManager() {
+        NotificationCenter.default.addObserver(self, selector: #selector(presentAPICallLimitError), name: Notification.Name("apiCallLimitError"), object: nil)
     }
     
     private func setupTokenFactsBackgroundView() {
@@ -620,6 +625,12 @@ class EthereumTokenInformationController: UIViewController, FetchCoinGeckoCoinId
     }
     
     // MARK: - Selectors
+    
+    @objc private func presentAPICallLimitError() {
+        let alertController = UIAlertController(title: "Error", message: "API calls to CoinGecko have been limited, wait a minute before executing more requests", preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Close", style: .default, handler: nil))
+        present(alertController, animated: true)
+    }
     
     @objc private func handlePanGestureRecognizerRelease(gesture: UIPanGestureRecognizer) {
         if gesture.state == .began {

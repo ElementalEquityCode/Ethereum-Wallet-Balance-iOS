@@ -56,6 +56,7 @@ class FetchCoinGeckoChartDataSession {
                         }
                     }
                 } catch let error {
+                    checkForCoinGeckoRateLimitError(data: data)
                     print("FetchCoinGeckoChartDataSession JSONDecoder: \(error.localizedDescription)")
                 }
             }
