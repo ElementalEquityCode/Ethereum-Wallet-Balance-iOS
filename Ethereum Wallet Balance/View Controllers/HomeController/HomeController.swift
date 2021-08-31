@@ -52,6 +52,7 @@ class HomeController: UIViewController, UITextFieldDelegate, AddressQRCodeScanDe
         setupCollectionView()
         setupTargets()
         setupDelegates()
+        setupNotificationCenter()
         fetchCDEthereumAddresses()
     }
     
@@ -67,6 +68,10 @@ class HomeController: UIViewController, UITextFieldDelegate, AddressQRCodeScanDe
     
     private func setupDelegates() {
         addressSearchTextField.delegate = self
+    }
+    
+    private func setupNotificationCenter() {
+        NotificationCenter.default.addObserver(self, selector: #selector(handleRepeatedAddressError), name: Notification.Name(rawValue: "repeatedAddressError"), object: nil)
     }
     
     private func fetchCDEthereumAddresses() {
@@ -86,12 +91,12 @@ class HomeController: UIViewController, UITextFieldDelegate, AddressQRCodeScanDe
                 
                 if let CDEthereumAddress = CoreDataManager.main.createCDEthereumAddress(with: address!) {
                     addresses.append(CDEthereumAddress)
-                }
-                
-                DispatchQueue.main.async { [unowned self] in
-                    self.ethereumAddressCollectionView.insertSections(IndexSet(integer: self.addresses.count - 1))
-                    if let header = self.ethereumAddressCollectionView.layoutAttributesForSupplementaryElement(ofKind: UICollectionView.elementKindSectionHeader, at: IndexPath(item: 0, section: self.addresses.count - 1)) {
-                        self.ethereumAddressCollectionView.setContentOffset(header.frame.origin, animated: true)
+                    
+                    DispatchQueue.main.async { [unowned self] in
+                        self.ethereumAddressCollectionView.insertSections(IndexSet(integer: self.addresses.count - 1))
+                        if let header = self.ethereumAddressCollectionView.layoutAttributesForSupplementaryElement(ofKind: UICollectionView.elementKindSectionHeader, at: IndexPath(item: 0, section: self.addresses.count - 1)) {
+                            self.ethereumAddressCollectionView.setContentOffset(header.frame.origin, animated: true)
+                        }
                     }
                 }
             } else if address!.addressValue == 0 {
@@ -156,6 +161,14 @@ class HomeController: UIViewController, UITextFieldDelegate, AddressQRCodeScanDe
     }
     
     // MARK: - Selectors
+    
+    @objc private func handleRepeatedAddressError() {
+        DispatchQueue.main.async {
+            let alertController = UIAlertController(title: "Error", message: "This address has already been added", preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: "Close", style: .default, handler: nil))
+            self.present(alertController, animated: true)
+        }
+    }
     
     @objc private func presentScanAddressQRCodeController() {
         UIImpactFeedbackGenerator(style: .medium).impactOccurred()

@@ -262,6 +262,8 @@ class EthereumTokenInformationController: UIViewController, FetchCoinGeckoCoinId
     deinit {
         print("Deinitializaing EthereumTokenInformationController")
         
+        NotificationCenter.default.removeObserver(self)
+        
         if let fetchCoinGeckoAssetIDSession = self.fetchCoinGeckoAssetIDSession {
             fetchCoinGeckoAssetIDSession.session.invalidateAndCancel()
         }

@@ -50,32 +50,48 @@ class CoreDataManager {
     // MARK: - CRUD for CDEthereumAddress
     
     func createCDEthereumAddress(with address: EthereumAddress) -> CDEthereumAddress? {
-        if let addressObject = NSEntityDescription.insertNewObject(forEntityName: "CDEthereumAddress", into: self.viewContext) as? CDEthereumAddress {
-            addressObject.address = address.address
-            addressObject.addressValue = address.addressValue ?? 0
-            addressObject.etherBalance = address.etherBalance
+        let predicate = NSPredicate(format: "\(#keyPath(CDEthereumAddress.address)) = %@", address.address)
+        let fetchRequest = NSFetchRequest<CDEthereumAddress>(entityName: "CDEthereumAddress")
+        fetchRequest.predicate = predicate
+        
+        do {
+            let searchResult = try viewContext.fetch(fetchRequest)
             
-            for coin in address.coins {
-                if let tokenObject = NSEntityDescription.insertNewObject(forEntityName: "CDEthereumToken", into: self.viewContext) as? CDEthereumToken {
+            if !searchResult.isEmpty {
+                NotificationCenter.default.post(Notification(name: Notification.Name("repeatedAddressError")))
+                return nil
+            } else {
+                if let addressObject = NSEntityDescription.insertNewObject(forEntityName: "CDEthereumAddress", into: self.viewContext) as? CDEthereumAddress {
+                    addressObject.address = address.address
+                    addressObject.addressValue = address.addressValue ?? 0
+                    addressObject.etherBalance = address.etherBalance
                     
-                    tokenObject.ticker = coin.ticker
-                    tokenObject.price = coin.price
-                    tokenObject.coinBalance = coin.coinBalance
-                    tokenObject.usdBalance = coin.usdBalance
-                    tokenObject.logoUrl = coin.logoUrl
-                    tokenObject.percentOfTotalPortfolio = coin.percentOfTotalPortfolio
-                    tokenObject.address = addressObject
-                    
-                    if let coinLogo = coin.logo {
-                        tokenObject.logo = coinLogo.pngData()
+                    for coin in address.coins {
+                        if let tokenObject = NSEntityDescription.insertNewObject(forEntityName: "CDEthereumToken", into: self.viewContext) as? CDEthereumToken {
+                            
+                            tokenObject.ticker = coin.ticker
+                            tokenObject.price = coin.price
+                            tokenObject.coinBalance = coin.coinBalance
+                            tokenObject.usdBalance = coin.usdBalance
+                            tokenObject.logoUrl = coin.logoUrl
+                            tokenObject.percentOfTotalPortfolio = coin.percentOfTotalPortfolio
+                            tokenObject.address = addressObject
+                            
+                            if let coinLogo = coin.logo {
+                                tokenObject.logo = coinLogo.pngData()
+                            }
+                        }
                     }
+                    
+                    self.save()
+                    
+                    return addressObject
                 }
             }
-            
-            self.save()
-            
-            return addressObject
+        } catch let error {
+            print(error.localizedDescription)
         }
+        
         return nil
     }
     
