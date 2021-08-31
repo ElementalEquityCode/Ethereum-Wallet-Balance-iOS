@@ -35,6 +35,8 @@
 		1E7897AF26C7425F0028248F /* ScanAddressQRCodeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7897AE26C7425F0028248F /* ScanAddressQRCodeController.swift */; };
 		1E7897B226C7455C0028248F /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7897B126C7455C0028248F /* UIViewController.swift */; };
 		1EA82AEE26C5BA340057E0C9 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA82AED26C5BA340057E0C9 /* UIColor.swift */; };
+		1EB6D85826DD94690098C2D5 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1EB6D85626DD94690098C2D5 /* Model.xcdatamodeld */; };
+		1EB6D85B26DD94750098C2D5 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB6D85A26DD94750098C2D5 /* CoreDataManager.swift */; };
 		1EF49EEE26CDBAD900AC41C6 /* FetchCoinGeckoMarketDataDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EF49EED26CDBAD900AC41C6 /* FetchCoinGeckoMarketDataDelegate.swift */; };
 		1EF49EF126CDC0D300AC41C6 /* FetchCoinGeckoChartDataSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EF49EF026CDC0D300AC41C6 /* FetchCoinGeckoChartDataSession.swift */; };
 		1EF49EF526CDC64C00AC41C6 /* ChartPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EF49EF426CDC64C00AC41C6 /* ChartPoint.swift */; };
@@ -72,6 +74,8 @@
 		1E7897AE26C7425F0028248F /* ScanAddressQRCodeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanAddressQRCodeController.swift; sourceTree = "<group>"; };
 		1E7897B126C7455C0028248F /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		1EA82AED26C5BA340057E0C9 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		1EB6D85726DD94690098C2D5 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		1EB6D85A26DD94750098C2D5 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		1EF49EED26CDBAD900AC41C6 /* FetchCoinGeckoMarketDataDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchCoinGeckoMarketDataDelegate.swift; sourceTree = "<group>"; };
 		1EF49EF026CDC0D300AC41C6 /* FetchCoinGeckoChartDataSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchCoinGeckoChartDataSession.swift; sourceTree = "<group>"; };
 		1EF49EF426CDC64C00AC41C6 /* ChartPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartPoint.swift; sourceTree = "<group>"; };
@@ -176,6 +180,7 @@
 			children = (
 				1E738BB926C5B94F00C1667E /* AppDelegate.swift */,
 				1E738BBB26C5B94F00C1667E /* SceneDelegate.swift */,
+				1EB6D85526DD94560098C2D5 /* Core Data */,
 				1E6B4E9426C5DC560077F66D /* Tools */,
 				1E57834B26C83B3000B0B80C /* Models */,
 				1E57833926C81F9E00B0B80C /* Protocols */,
@@ -211,6 +216,15 @@
 				1E7897B126C7455C0028248F /* UIViewController.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		1EB6D85526DD94560098C2D5 /* Core Data */ = {
+			isa = PBXGroup;
+			children = (
+				1EB6D85A26DD94750098C2D5 /* CoreDataManager.swift */,
+				1EB6D85626DD94690098C2D5 /* Model.xcdatamodeld */,
+			);
+			path = "Core Data";
 			sourceTree = "<group>";
 		};
 		518672C1DA6B467BC4F0D5A8 /* Frameworks */ = {
@@ -373,12 +387,14 @@
 				1E57834426C8250700B0B80C /* UIActivityIndicatorView.swift in Sources */,
 				1E4F82A926D0508C00B62ED4 /* UIButton.swift in Sources */,
 				1E1ED61726C98917005306BF /* HomeController + UICollectionView.swift in Sources */,
+				1EB6D85B26DD94750098C2D5 /* CoreDataManager.swift in Sources */,
 				1E1ED60F26C98472005306BF /* EthereumAddress.swift in Sources */,
 				1E1DC14226CDB43700AB6050 /* FetchCoinGeckoCoinIdDelegate.swift in Sources */,
 				1E7897B226C7455C0028248F /* UIViewController.swift in Sources */,
 				1EF49EF126CDC0D300AC41C6 /* FetchCoinGeckoChartDataSession.swift in Sources */,
 				1E6B4E9126C5D88B0077F66D /* UIView.swift in Sources */,
 				1EA82AEE26C5BA340057E0C9 /* UIColor.swift in Sources */,
+				1EB6D85826DD94690098C2D5 /* Model.xcdatamodeld in Sources */,
 				1E74F6FD26CB5D3C00D3518E /* EthereumTokenInformationController.swift in Sources */,
 				1E1DC13F26CDB35600AB6050 /* FetchCoinGeckoAssetIDSession.swift in Sources */,
 				1E738BBA26C5B94F00C1667E /* AppDelegate.swift in Sources */,
@@ -586,6 +602,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		1EB6D85626DD94690098C2D5 /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				1EB6D85726DD94690098C2D5 /* Model.xcdatamodel */,
+			);
+			currentVersion = 1EB6D85726DD94690098C2D5 /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 1E738BAE26C5B94F00C1667E /* Project object */;
 }

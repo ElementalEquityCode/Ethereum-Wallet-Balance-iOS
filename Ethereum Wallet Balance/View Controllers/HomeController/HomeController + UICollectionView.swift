@@ -19,7 +19,16 @@ extension HomeController: UICollectionViewDataSource, UICollectionViewDelegate, 
     // MARK: - UICollectionViewDataSource
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return !addresses.isEmpty ? addresses[section].coins.count : 0
+        
+        if !addresses.isEmpty {
+            let address = addresses[section]
+            
+            if address.coins != nil {
+                return address.coins!.count
+            }
+        }
+        
+        return 0
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -35,10 +44,12 @@ extension HomeController: UICollectionViewDataSource, UICollectionViewDelegate, 
             
             let address = addresses[indexPath.section]
             
-            view.ethereumAddress = address.address
+            view.ethereumAddress = address.address ?? ""
             view.etherBalance = address.etherBalance
-            view.erc20Tokens = address.coins.count
-            view.addressValue = address.addressValue ?? 0
+            if let coins = address.coins {
+                view.erc20Tokens = coins.count
+            }
+            view.addressValue = address.addressValue
             
             return view
         }
@@ -48,19 +59,21 @@ extension HomeController: UICollectionViewDataSource, UICollectionViewDelegate, 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? EthereumTokenCell {
             
-            cell.coin = addresses[indexPath.section].coins[indexPath.row]
-            
-            if indexPath.row == 0 {
-                if addresses[indexPath.section].coins.count == 1 {
-                    cell.layer.cornerRadius = viewCornerRadius
-                } else {
-                    cell.setupTopCornerRadius()
+            if let coins = addresses[indexPath.section].coins?.allObjects as? [CDEthereumToken] {
+                cell.coin = coins[indexPath.row]
+                
+                if indexPath.row == 0 {
+                    if coins.count == 1 {
+                        cell.layer.cornerRadius = viewCornerRadius
+                    } else {
+                        cell.setupTopCornerRadius()
+                        cell.setupBorderView()
+                    }
+                } else if indexPath.row < coins.count - 1 {
                     cell.setupBorderView()
+                } else {
+                    cell.setupBottomCornerRadius()
                 }
-            } else if indexPath.row < addresses[indexPath.section].coins.count - 1 {
-                cell.setupBorderView()
-            } else {
-                cell.setupBottomCornerRadius()
             }
             
             return cell

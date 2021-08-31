@@ -6,9 +6,12 @@
 //
 
 // Issues so far
-// Memory leaks associated with URLSession
 // Matching the ID's with the correct CoinGecko coin because some have repeated IDs
-// Add Core Data
+
+// Missing features
+// Don't allow repeated addresses
+// Refresh data when opening app again
+// Pull down to refresh Zapper data
 
 import UIKit
 
@@ -16,7 +19,7 @@ class HomeController: UIViewController, UITextFieldDelegate, AddressQRCodeScanDe
     
     // MARK: - Properties
     
-    var addresses = [EthereumAddress]()
+    var addresses = [CDEthereumAddress]()
         
     private lazy var overallStackView = UIStackView.makeVerticalStackView(with: [addressSearchTextField, activityIndicatorViewStackView, ethereumAddressCollectionView], distribution: .fill, spacing: 5)
     
@@ -43,12 +46,13 @@ class HomeController: UIViewController, UITextFieldDelegate, AddressQRCodeScanDe
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
+                
         view.backgroundColor = .primaryBackgroundColor
         setupSubviews()
         setupCollectionView()
         setupTargets()
         setupDelegates()
+        fetchCDEthereumAddresses()
     }
     
     private func setupSubviews() {
@@ -65,12 +69,24 @@ class HomeController: UIViewController, UITextFieldDelegate, AddressQRCodeScanDe
         addressSearchTextField.delegate = self
     }
     
+    private func fetchCDEthereumAddresses() {
+        DispatchQueue.main.async { [unowned self] in
+            if let addresses = CoreDataManager.main.fetchAllCDEthereumAddresses() {
+                self.addresses = addresses
+                self.ethereumAddressCollectionView.reloadData()
+            }
+        }
+    }
+    
     // MARK: - CoinDelegate
     
     func didAddEthereumAddress(address: EthereumAddress?) {
         if address != nil {
             if address!.addressValue != 0 {
-                addresses.append(address!)
+                
+                if let CDEthereumAddress = CoreDataManager.main.createCDEthereumAddress(with: address!) {
+                    addresses.append(CDEthereumAddress)
+                }
                 
                 DispatchQueue.main.async { [unowned self] in
                     self.ethereumAddressCollectionView.insertSections(IndexSet(integer: self.addresses.count - 1))
@@ -158,7 +174,7 @@ class HomeController: UIViewController, UITextFieldDelegate, AddressQRCodeScanDe
         alertController.addAction(UIAlertAction(title: "Delete Address", style: .destructive, handler: { (_) in
             if let sectionToDeleteAsString = gesture.name {
                 if let sectionToDelete = Int(sectionToDeleteAsString) {
-                    self.addresses.remove(at: sectionToDelete)
+                    CoreDataManager.main.deleteCDEthereumAddress(address: self.addresses.remove(at: sectionToDelete))
                     self.ethereumAddressCollectionView.deleteSections(IndexSet(integer: sectionToDelete))
                 }
             }

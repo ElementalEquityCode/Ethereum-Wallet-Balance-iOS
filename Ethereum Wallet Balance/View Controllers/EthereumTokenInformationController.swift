@@ -54,7 +54,7 @@ class EthereumTokenInformationController: UIViewController, FetchCoinGeckoCoinId
         }
     }
     
-    private let token: EthereumToken
+    private let token: CDEthereumToken
     
     private var dailyChangePercentage: Double? {
         didSet {
@@ -248,7 +248,7 @@ class EthereumTokenInformationController: UIViewController, FetchCoinGeckoCoinId
     
     // MARK: - Initialization
     
-    init(token: EthereumToken) {
+    init(token: CDEthereumToken) {
         self.token = token
         super.init(nibName: nil, bundle: nil)
     }
@@ -316,7 +316,7 @@ class EthereumTokenInformationController: UIViewController, FetchCoinGeckoCoinId
     }
     
     private func setupPercentageOfWalletBackgroundView() {
-        coinBalanceLabel.text = "\(formatDoubleToTwoDecimalPlaces(value: token.coinBalance)) \(token.ticker)".uppercased()
+        coinBalanceLabel.text = "\(formatDoubleToTwoDecimalPlaces(value: token.coinBalance)) \(token.ticker ?? "")".uppercased()
         percentageOfPortfolioLabel.text = "\(formatDoubleToTwoDecimalPlaces(value: token.percentOfTotalPortfolio * 100))% of wallet"
         
         percentageOfWalletBackgroundView.addSubview(coinBalanceLabel)
@@ -338,7 +338,11 @@ class EthereumTokenInformationController: UIViewController, FetchCoinGeckoCoinId
     }
     
     private func setupTokenFactsBackgroundView() {
-        coinLogoImageView.image = token.logo
+        if let tokenLogoData = token.logo {
+            if let tokenLogoImage = UIImage(data: tokenLogoData) {
+                coinLogoImageView.image = tokenLogoImage
+            }
+        }
         
         let pricePerTokenLabelString1 = NSAttributedString(string: "Price - ", attributes: [NSAttributedString.Key.foregroundColor: UIColor.primaryTextColor])
         let pricePerTokenLabelString2 = NSAttributedString(string: "$\(formatDoubleToTwoDecimalPlaces(value: token.price))", attributes: [NSAttributedString.Key.foregroundColor: UIColor.placeholderTextColor])
@@ -417,7 +421,7 @@ class EthereumTokenInformationController: UIViewController, FetchCoinGeckoCoinId
     private func fetchAllCoinsFromCoinGecko() {
         fetchCoinGeckoAssetIDSession = FetchCoinGeckoAssetIDSession()
         fetchCoinGeckoAssetIDSession!.delegate = self
-        fetchCoinGeckoAssetIDSession!.getID(for: token.ticker)
+        fetchCoinGeckoAssetIDSession!.getID(for: token.ticker ?? "")
     }
     
     // MARK: - Selectors

@@ -11,17 +11,19 @@ class EthereumTokenCell: UICollectionViewCell, FetchCoinLogoDelegate {
     
     // MARK: - Properties
         
-    var coin: EthereumToken? {
+    var coin: CDEthereumToken? {
         didSet {
             if let coin = self.coin {
-                if let image = coin.logo {
-                     coinLogoImageView.image = image
+                if let coinLogoData = coin.logo {
+                    if let coinLogo = UIImage(data: coinLogoData) {
+                        performSetCoinLogoToCoinLogoImageViewAnimation(with: coinLogo)
+                    }
                 } else {
-                     FetchCoinLogoSession(coin: coin, delegate: self).getLogoImage()
+                    FetchCoinLogoSession(coin: coin, delegate: self).getLogoImage()
                 }
                 
                 let attributedString1 = NSAttributedString(string: "\(formatDoubleToTwoDecimalPlaces(value: coin.coinBalance)) ", attributes: [NSAttributedString.Key.foregroundColor: UIColor(red: 76/255, green: 175/255, blue: 80/255, alpha: 1), NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12.5, weight: .medium)])
-                let attributedString2  = NSAttributedString(string: "\(coin.ticker)", attributes: [NSAttributedString.Key.foregroundColor: UIColor.placeholderTextColor, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12.5, weight: .light)])
+                let attributedString2  = NSAttributedString(string: "\(coin.ticker ?? "")", attributes: [NSAttributedString.Key.foregroundColor: UIColor.placeholderTextColor, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12.5, weight: .light)])
                 let array = NSMutableAttributedString()
                 array.append(attributedString1)
                 array.append(attributedString2)
@@ -143,12 +145,21 @@ class EthereumTokenCell: UICollectionViewCell, FetchCoinLogoDelegate {
     
     func didFetchLogo(image: UIImage?) {
         if let image = image {
-            if let coin = coin {
-                coin.logo = image
-            }
             DispatchQueue.main.async {
-                self.coinLogoImageView.image = image
+                if let coin = self.coin {
+                    CoreDataManager.main.setCDEthereumTokenLogo(for: coin, with: image)
+                }
+                
+                self.performSetCoinLogoToCoinLogoImageViewAnimation(with: image)
             }
+        }
+    }
+    
+    // MARK: - Animations
+    
+    private func performSetCoinLogoToCoinLogoImageViewAnimation(with image: UIImage) {
+        UIView.transition(with: coinLogoImageView, duration: 0.3, options: .transitionCrossDissolve) {
+            self.coinLogoImageView.image = image
         }
     }
     

@@ -13,8 +13,8 @@ class FetchCoinLogoSession {
         
     private let assetUrl: String
             
-    init(coin: EthereumToken, delegate: FetchCoinLogoDelegate) {
-        self.assetUrl = coin.logoUrl
+    init(coin: CDEthereumToken, delegate: FetchCoinLogoDelegate) {
+        self.assetUrl = coin.logoUrl ?? ""
         self.delegate = delegate
     }
     
