@@ -5,15 +5,8 @@
 //  Created by Daniel Valencia on 8/12/21.
 //
 
-// Addresses ->
-// 0x51DD3d613b33673B8865AAB1673079B120efBc8f
-
 // Issues so far
 // Matching the ID's with the correct CoinGecko coin because some have repeated IDs
-
-// Missing features
-// Refresh data when opening app again
-// Pull down to refresh Zapper data
 
 import UIKit
 
@@ -35,7 +28,6 @@ class HomeController: UIViewController, UITextFieldDelegate, AddressQRCodeScanDe
     
     let ethereumAddressCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
-        collectionView.contentInset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
         collectionView.collectionViewLayout.invalidateLayout()
         collectionView.layer.cornerRadius = viewCornerRadius
         collectionView.backgroundColor = .clear
@@ -81,11 +73,9 @@ class HomeController: UIViewController, UITextFieldDelegate, AddressQRCodeScanDe
     }
     
     private func fetchCDEthereumAddresses() {
-        DispatchQueue.main.async { [unowned self] in
-            if let addresses = CoreDataManager.main.fetchAllCDEthereumAddresses() {
-                self.addresses = addresses
-                self.handleRefresh()
-            }
+        if let addresses = CoreDataManager.main.fetchAllCDEthereumAddresses() {
+            self.addresses = addresses
+            self.handleRefresh()
         }
     }
     
@@ -97,10 +87,10 @@ class HomeController: UIViewController, UITextFieldDelegate, AddressQRCodeScanDe
                 DispatchQueue.main.async { [unowned self] in
                     if let CDEthereumAddress = CoreDataManager.main.createCDEthereumAddress(with: address!) {
                         addresses.append(CDEthereumAddress)
-                            self.ethereumAddressCollectionView.insertSections(IndexSet(integer: self.addresses.count - 1))
-                            if let header = self.ethereumAddressCollectionView.layoutAttributesForSupplementaryElement(ofKind: UICollectionView.elementKindSectionHeader, at: IndexPath(item: 0, section: self.addresses.count - 1)) {
-                                self.ethereumAddressCollectionView.setContentOffset(header.frame.origin, animated: true)
-                            }
+                        addresses.sort { (address1, address2) -> Bool in
+                            return address1.addressValue > address2.addressValue
+                        }
+                        self.ethereumAddressCollectionView.reloadData()
                     }
                 }
             } else if address!.addressValue == 0 {
@@ -176,16 +166,22 @@ class HomeController: UIViewController, UITextFieldDelegate, AddressQRCodeScanDe
                 }
             }
             
+            var index = 0
+            let addressCount = addresses.count
+            
             addresses.removeAll()
             ethereumAddressCollectionView.reloadData()
             CoreDataManager.main.deleteAllData()
             
             stringAddresses.forEach { (address) in
                 SearchForAddressSession(address: address, delegate: self).getCoinBalances { [unowned self] in
-                    DispatchQueue.main.async { [unowned self] in
-                        self.refreshControl.endRefreshing()
+                    if index == addressCount {
+                        DispatchQueue.main.async { [unowned self] in
+                            self.refreshControl.endRefreshing()
+                        }
                     }
                 }
+                index += 1
             }
             
         } else {

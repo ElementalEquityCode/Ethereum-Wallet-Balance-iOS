@@ -59,7 +59,9 @@ extension HomeController: UICollectionViewDataSource, UICollectionViewDelegate, 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? EthereumTokenCell {
             
-            if let coins = addresses[indexPath.section].coins?.allObjects as? [CDEthereumToken] {
+            if let coins = (addresses[indexPath.section].coins?.allObjects as? [CDEthereumToken])?.sorted(by: { (coin1, coin2) -> Bool in
+                return coin1.usdBalance < coin2.usdBalance
+            }) {
                 cell.coin = coins[indexPath.row]
                 
                 if indexPath.row == 0 {
@@ -105,11 +107,11 @@ extension HomeController: UICollectionViewDataSource, UICollectionViewDelegate, 
     // MARK: - UICollectionViewDelegateFlowLayout
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: collectionView.frame.width - 10, height: 266)
+        return CGSize(width: collectionView.frame.width, height: 266)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width - 10, height: 70)
+        return CGSize(width: collectionView.frame.width, height: 70)
     }
     
 }

@@ -383,10 +383,10 @@ class EthereumTokenInformationController: UIViewController, FetchCoinGeckoCoinId
         lineChartBackgroundView.addSubview(selectedPriceAndDateLabelsStackView)
         lineChartBackgroundView.addSubview(timeFrameButtonsStackView)
         
-        lineChart.heightAnchor.constraint(equalTo: lineChartBackgroundView.heightAnchor, multiplier: 0.7).isActive = true
+        lineChart.heightAnchor.constraint(equalTo: lineChartBackgroundView.heightAnchor, multiplier: 0.60).isActive = true
         lineChart.leadingAnchor.constraint(equalTo: lineChartBackgroundView.leadingAnchor, constant: -10).isActive = true
         lineChart.trailingAnchor.constraint(equalTo: lineChartBackgroundView.trailingAnchor, constant: 10).isActive = true
-        lineChart.topAnchor.constraint(equalTo: lineChartBackgroundView.topAnchor, constant: lineChartBackgroundView.frame.height * 0.15).isActive = true
+        lineChart.topAnchor.constraint(equalTo: lineChartBackgroundView.topAnchor, constant: lineChartBackgroundView.frame.height * 0.20).isActive = true
         
         selectedPriceAndDateLabelsStackView.anchor(topAnchor: lineChartBackgroundView.topAnchor, trailingAnchor: lineChartBackgroundView.trailingAnchor, bottomAnchor: lineChart.topAnchor, leadingAnchor: lineChartBackgroundView.leadingAnchor, topPadding: 24, trailingPadding: 24, bottomPadding: 0, leadingPadding: 24, height: 0, width: 0)
         
@@ -555,14 +555,6 @@ class EthereumTokenInformationController: UIViewController, FetchCoinGeckoCoinId
     func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
         setTextForSelectedPriceLabel(value: entry.y)
         selectedDateLabel.text = convertTimeStampToHumanReadableDate(timestamp: entry.x)
-    }
-    
-    func chartViewDidEndPanning(_ chartView: ChartViewBase) {
-        print("here")
-    }
-    
-    func chartView(_ chartView: ChartViewBase, animatorDidStop animator: Animator) {
-        print("here 2")
     }
     
     // MARK: - Animations

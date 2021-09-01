@@ -10,6 +10,8 @@ import UIKit
 class EthereumTokenCell: UICollectionViewCell, FetchCoinLogoDelegate {
     
     // MARK: - Properties
+    
+    var session: FetchCoinLogoSession?
         
     var coin: CDEthereumToken? {
         didSet {
@@ -19,7 +21,8 @@ class EthereumTokenCell: UICollectionViewCell, FetchCoinLogoDelegate {
                         coinLogoImageView.image = coinLogo
                     }
                 } else {
-                    FetchCoinLogoSession(coin: coin, delegate: self).getLogoImage()
+                    session = FetchCoinLogoSession(coin: coin, delegate: self)
+                    session?.getLogoImage()
                 }
                 
                 let attributedString1 = NSAttributedString(string: "\(formatDoubleToTwoDecimalPlaces(value: coin.coinBalance)) ", attributes: [NSAttributedString.Key.foregroundColor: UIColor(red: 76/255, green: 175/255, blue: 80/255, alpha: 1), NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12.5, weight: .medium)])
@@ -93,7 +96,11 @@ class EthereumTokenCell: UICollectionViewCell, FetchCoinLogoDelegate {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        
+    
+        if session != nil {
+            session!.session.invalidateAndCancel()
+        }
+        coin = nil
         balanceValueLabel.attributedText = NSAttributedString()
         tokenValueLabel.text = ""
         coinLogoImageView.image = nil

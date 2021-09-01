@@ -134,6 +134,7 @@ class CoreDataManager {
     
     func setCDEthereumTokenLogo(for coin: CDEthereumToken, with image: UIImage) {
         coin.logo = image.pngData()
+        save()
     }
     
 }

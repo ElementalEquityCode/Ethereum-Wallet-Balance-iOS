@@ -12,6 +12,8 @@ class FetchCoinLogoSession {
     private unowned let delegate: FetchCoinLogoDelegate
         
     private let assetUrl: String
+    
+    let session = URLSession(configuration: .ephemeral)
             
     init(coin: CDEthereumToken, delegate: FetchCoinLogoDelegate) {
         self.assetUrl = coin.logoUrl ?? ""
@@ -20,9 +22,7 @@ class FetchCoinLogoSession {
     
     func getLogoImage() {
         guard let url = URL(string: assetUrl) else { return }
-        
-        let session = URLSession(configuration: .ephemeral)
-        
+                
         session.dataTask(with: url) { (data, response, error) in
             if let error = error {
                 print(error.localizedDescription)
