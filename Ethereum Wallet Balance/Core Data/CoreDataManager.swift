@@ -37,11 +37,20 @@ class CoreDataManager {
     
     func deleteAllData() {
         let deleteAddressesRequest = NSBatchDeleteRequest(fetchRequest: NSFetchRequest(entityName: "CDEthereumAddress"))
+        deleteAddressesRequest.resultType = .resultTypeObjectIDs
         let deleteTokensRequest = NSBatchDeleteRequest(fetchRequest: NSFetchRequest(entityName: "CDEthereumToken"))
+        deleteTokensRequest.resultType = .resultTypeObjectIDs
         
         do {
-            try viewContext.execute(deleteAddressesRequest)
-            try viewContext.execute(deleteTokensRequest)
+            if let results1 = try viewContext.execute(deleteAddressesRequest) as? NSBatchDeleteResult {
+                let changes: [AnyHashable: Any] = [NSDeletedObjectsKey: results1.result as Any]
+                NSManagedObjectContext.mergeChanges(fromRemoteContextSave: changes, into: [viewContext])
+            }
+            
+            if let results2 = try viewContext.execute(deleteTokensRequest) as? NSBatchDeleteResult {
+                let changes: [AnyHashable: Any] = [NSDeletedObjectsKey: results2.result as Any]
+                NSManagedObjectContext.mergeChanges(fromRemoteContextSave: changes, into: [viewContext])
+            }
         } catch let error {
             print(error.localizedDescription)
         }

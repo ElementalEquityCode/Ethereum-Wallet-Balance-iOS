@@ -16,7 +16,7 @@ class EthereumTokenCell: UICollectionViewCell, FetchCoinLogoDelegate {
             if let coin = self.coin {
                 if let coinLogoData = coin.logo {
                     if let coinLogo = UIImage(data: coinLogoData) {
-                        performSetCoinLogoToCoinLogoImageViewAnimation(with: coinLogo)
+                        coinLogoImageView.image = coinLogo
                     }
                 } else {
                     FetchCoinLogoSession(coin: coin, delegate: self).getLogoImage()

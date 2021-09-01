@@ -4,7 +4,7 @@
         <attribute name="address" optional="YES" attributeType="String"/>
         <attribute name="addressValue" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="etherBalance" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <relationship name="coins" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CDEthereumToken" inverseName="address" inverseEntity="CDEthereumToken"/>
+        <relationship name="coins" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CDEthereumToken" inverseName="address" inverseEntity="CDEthereumToken"/>
     </entity>
     <entity name="CDEthereumToken" representedClassName="CDEthereumToken" syncable="YES" codeGenerationType="class">
         <attribute name="coinBalance" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
@@ -17,7 +17,7 @@
         <relationship name="address" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDEthereumAddress" inverseName="coins" inverseEntity="CDEthereumAddress"/>
     </entity>
     <elements>
-        <element name="CDEthereumAddress" positionX="-313.0360717773438" positionY="65.34588623046875" width="128" height="103"/>
+        <element name="CDEthereumAddress" positionX="-313.0360717773438" positionY="65.34588623046875" width="128" height="89"/>
         <element name="CDEthereumToken" positionX="-54" positionY="18" width="128" height="149"/>
     </elements>
 </model>

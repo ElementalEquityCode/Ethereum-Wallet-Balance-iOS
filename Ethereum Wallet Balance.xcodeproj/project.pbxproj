@@ -34,6 +34,7 @@
 		1E74F6FD26CB5D3C00D3518E /* EthereumTokenInformationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E74F6FC26CB5D3C00D3518E /* EthereumTokenInformationController.swift */; };
 		1E7897AF26C7425F0028248F /* ScanAddressQRCodeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7897AE26C7425F0028248F /* ScanAddressQRCodeController.swift */; };
 		1E7897B226C7455C0028248F /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7897B126C7455C0028248F /* UIViewController.swift */; };
+		1E81570726DECC0D00BCAA6E /* UIRefreshControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E81570626DECC0D00BCAA6E /* UIRefreshControl.swift */; };
 		1EA82AEE26C5BA340057E0C9 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA82AED26C5BA340057E0C9 /* UIColor.swift */; };
 		1EB6D85826DD94690098C2D5 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1EB6D85626DD94690098C2D5 /* Model.xcdatamodeld */; };
 		1EB6D85B26DD94750098C2D5 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB6D85A26DD94750098C2D5 /* CoreDataManager.swift */; };
@@ -73,6 +74,7 @@
 		1E74F6FC26CB5D3C00D3518E /* EthereumTokenInformationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EthereumTokenInformationController.swift; sourceTree = "<group>"; };
 		1E7897AE26C7425F0028248F /* ScanAddressQRCodeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanAddressQRCodeController.swift; sourceTree = "<group>"; };
 		1E7897B126C7455C0028248F /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
+		1E81570626DECC0D00BCAA6E /* UIRefreshControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIRefreshControl.swift; sourceTree = "<group>"; };
 		1EA82AED26C5BA340057E0C9 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		1EB6D85726DD94690098C2D5 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		1EB6D85A26DD94750098C2D5 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
@@ -211,6 +213,7 @@
 				1E57834326C8250700B0B80C /* UIActivityIndicatorView.swift */,
 				1E4F82A826D0508C00B62ED4 /* UIButton.swift */,
 				1EA82AED26C5BA340057E0C9 /* UIColor.swift */,
+				1E81570626DECC0D00BCAA6E /* UIRefreshControl.swift */,
 				1E6B4E8D26C5D8070077F66D /* UIStackView.swift */,
 				1E6B4E9026C5D88B0077F66D /* UIView.swift */,
 				1E7897B126C7455C0028248F /* UIViewController.swift */,
@@ -407,6 +410,7 @@
 				1E738BBC26C5B94F00C1667E /* SceneDelegate.swift in Sources */,
 				1E57834826C83B2C00B0B80C /* EthereumToken.swift in Sources */,
 				1E1ED61B26C98991005306BF /* EthereumTokenCell.swift in Sources */,
+				1E81570726DECC0D00BCAA6E /* UIRefreshControl.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
